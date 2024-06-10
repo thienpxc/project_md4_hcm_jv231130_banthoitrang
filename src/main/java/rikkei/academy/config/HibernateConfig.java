@@ -24,7 +24,7 @@ public class HibernateConfig {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
         sessionFactory.setPackagesToScan(new String[] {
-                "ra.mvcconfig.model"
+                "rikkei.academy.modules",
         });
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;

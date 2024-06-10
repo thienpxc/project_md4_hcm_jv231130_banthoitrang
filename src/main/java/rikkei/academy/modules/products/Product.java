@@ -1,12 +1,10 @@
 package rikkei.academy.modules.products;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import rikkei.academy.modules.category.Category;
 
 import javax.persistence.*;
+import java.awt.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -14,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Setter
 @Getter
+@Builder
 @Table(name = "Product")
 @Entity
 public class Product {
@@ -30,7 +29,9 @@ public class Product {
     private Date created_at;
     private Date updated_at;
     private boolean status;
-    private String image;
+    @OneToOne
+    @JoinColumn(name = "image_id")
+    private Image image_id;
     private String manufacturer;
 
 }
