@@ -8,12 +8,18 @@ import rikkei.academy.modules.customer.dto.loginDto.RegisterForm;
 
 import javax.transaction.Transactional;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @Transactional
 public class UserServicelmpl implements IUserService {
     @Autowired
     private IUserDao userDao;
+
+    @Override
+    public List<Customer> getAll() {
+        return userDao.getAll();
+    }
     @Override
     public Customer getUserByUserName(String userName) {
         return userDao.getUserByUserName(userName);

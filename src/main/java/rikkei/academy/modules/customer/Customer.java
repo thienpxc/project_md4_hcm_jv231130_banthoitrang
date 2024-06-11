@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -25,7 +26,10 @@ public class Customer {
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     @Id
     private Integer customer_id;
+    @NotBlank
     private String customer_name;
+    @NotNull
+    @Email
     private String email;
     private String password;
     private String phone_number;

@@ -6,10 +6,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import rikkei.academy.modules.customer.Customer;
-import rikkei.academy.modules.customer.dto.loginDto.LoginForm;
 import rikkei.academy.modules.customer.dto.loginDto.RegisterForm;
 
-import java.util.Date;
+import java.util.List;
 
 @Repository
 public class UserDaolmpl implements IUserDao{
@@ -20,6 +19,11 @@ public class UserDaolmpl implements IUserDao{
 
     }
 
+    @Override
+    public List getAll() {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Customer").list();
+    }
     @Override
     public Customer login(String token) {
         return new Customer();
