@@ -30,5 +30,4 @@ public class Product {
     private Date updated_at;
     private boolean status;
     private String manufacturer;
-
 }

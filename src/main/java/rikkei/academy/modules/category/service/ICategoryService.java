@@ -1,7 +1,7 @@
 package rikkei.academy.modules.category.service;
 
 
-import rikkei.academy.modules.IGeneric;
+import rikkei.academy.generic.IGeneric;
 import rikkei.academy.modules.category.Category;
 
 import java.util.List;

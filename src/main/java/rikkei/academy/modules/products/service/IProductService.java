@@ -4,7 +4,7 @@ package rikkei.academy.modules.products.service;
 import rikkei.academy.modules.products.Product;
 import rikkei.academy.modules.products.dto.request.ProductRequest;
 import rikkei.academy.modules.products.dto.response.ProductResponse;
-import rikkei.academy.modules.IGeneric;
+import rikkei.academy.generic.IGeneric;
 
 import java.util.List;
 

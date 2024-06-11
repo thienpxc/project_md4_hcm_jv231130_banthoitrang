@@ -1,6 +1,6 @@
 package rikkei.academy.modules.products.dao;
 
-import rikkei.academy.modules.IGenericDao;
+import rikkei.academy.generic.IGenericDao;
 import rikkei.academy.modules.products.Product;
 
 import java.util.List;

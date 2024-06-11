@@ -28,7 +28,6 @@ public class ProductResponse {
     public ProductResponse(Product product) {
         this.id  = product.getId();
         this.name = product.getName();
-        this.image = product.getImage();
         this.createdAt = product.getCreated_at();
         this.description = product.getDescription();
         this.stock = product.getStock();

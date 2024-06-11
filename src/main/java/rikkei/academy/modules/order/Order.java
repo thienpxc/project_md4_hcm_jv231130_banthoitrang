@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import rikkei.academy.modules.Status;
+import rikkei.academy.generic.Status;
 
 import java.time.LocalDateTime;
 
