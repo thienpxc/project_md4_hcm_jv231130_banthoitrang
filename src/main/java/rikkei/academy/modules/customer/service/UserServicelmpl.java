@@ -6,10 +6,11 @@ import rikkei.academy.modules.customer.Customer;
 import rikkei.academy.modules.customer.dao.IUserDao;
 import rikkei.academy.modules.customer.dto.loginDto.RegisterForm;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 
 @Service
-
+@Transactional
 public class UserServicelmpl implements IUserService {
     @Autowired
     private IUserDao userDao;

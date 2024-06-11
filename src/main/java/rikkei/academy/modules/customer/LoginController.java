@@ -31,7 +31,6 @@ public class LoginController {
     }
     @PostMapping("/doLogin")
     public String doLogin(@ModelAttribute("loginForm") LoginForm form, HttpSession session) {
-
         Customer customer = userService.getUserByUserName(form.getUsername());
         session.setAttribute("loginUser", customer);
         session.setAttribute("login", "login");

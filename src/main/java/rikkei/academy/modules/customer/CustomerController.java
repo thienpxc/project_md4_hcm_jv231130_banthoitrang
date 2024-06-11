@@ -26,7 +26,6 @@ public class CustomerController {
     public String contact() {
         return "customer/shop/contact";
     }
-
     @GetMapping("/shop")
     public String shop() {
         return "customer/shop/shop";
