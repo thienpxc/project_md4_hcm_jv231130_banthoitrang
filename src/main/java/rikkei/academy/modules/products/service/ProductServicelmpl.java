@@ -38,41 +38,41 @@ public class ProductServicelmpl implements IProductService {
         return null;
     }
 
-    @Override
-    public void save(ProductRequest request) {
-        // chuyển đổi
-        Product product = new Product();
-        if (request.getId() != null){
-            // neu laf chuc nang cap nhap
-            product = productDaolmpl.findById(request.getId());
-        } else {
-            product.setCreated_at(new Date());
-            product.setStatus(true);
-        }
-        product.setName(request.getName());
-        product.setDescription(request.getDes());
-        product.setPrice(request.getPrice());
-        product.setStock(request.getStock());
-        product.setCategory_id(request.getCatalogId());
-
-        // upload mới
-        if (request.getImageUrl() != null && request.getImageUrl().getSize() != 0){
-            String uploadPath = servletContext.getRealPath("/uploads");
-            File folder = new File(uploadPath);
-            if (!folder.exists()){
-                folder.mkdirs();
-            }
-            String fileName = request.getImageUrl().getOriginalFilename();
-            try {
-                FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadPath + File.separator + fileName));
-                FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadFolder + fileName));
-                product.setImage("/uploads/" + fileName);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        productDaolmpl.save(product);
-    }
+//    @Override
+//    public void save(ProductRequest request) {
+//        // chuyển đổi
+//        Product product = new Product();
+//        if (request.getId() != null){
+//            // neu laf chuc nang cap nhap
+//            product = productDaolmpl.findById(request.getId());
+//        } else {
+//            product.setCreated_at(new Date());
+//            product.setStatus(true);
+//        }
+//        product.setName(request.getName());
+//        product.setDescription(request.getDes());
+//        product.setPrice(request.getPrice());
+//        product.setStock(request.getStock());
+//        product.setCategory_id(request.getCatalogId());
+//
+//        // upload mới
+//        if (request.getImageUrl() != null && request.getImageUrl().getSize() != 0){
+//            String uploadPath = servletContext.getRealPath("/uploads");
+//            File folder = new File(uploadPath);
+//            if (!folder.exists()){
+//                folder.mkdirs();
+//            }
+//            String fileName = request.getImageUrl().getOriginalFilename();
+//            try {
+//                FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadPath + File.separator + fileName));
+//                FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadFolder + fileName));
+//                product.setImage("/uploads/" + fileName);
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//        productDaolmpl.save(product);
+//    }
 
     @Override
     public void delete(Integer id) {

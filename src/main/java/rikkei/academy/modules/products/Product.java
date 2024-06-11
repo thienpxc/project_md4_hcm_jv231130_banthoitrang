@@ -21,6 +21,7 @@ public class Product {
     private Integer id;
     private String name;
     @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category_id;
     private String description;
     private double price;
@@ -28,9 +29,5 @@ public class Product {
     private Date created_at;
     private Date updated_at;
     private boolean status;
-    @OneToOne
-    @JoinColumn(name = "image_id")
-    private Image image_id;
     private String manufacturer;
-
 }

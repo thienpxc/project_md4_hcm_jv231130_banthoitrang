@@ -22,5 +22,4 @@ public class ProductRequest {
     private int stock;
     private MultipartFile imageUrl;
     private boolean status = true;
-
 }

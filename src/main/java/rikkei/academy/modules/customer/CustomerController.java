@@ -1,19 +1,18 @@
 package rikkei.academy.modules.customer;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import rikkei.academy.modules.customer.dto.loginDto.LoginForm;
+import rikkei.academy.modules.customer.dto.loginDto.RegisterForm;
 
 @Controller
 @RequestMapping(value = {"/customer", ""})
 public class CustomerController {
-    @GetMapping(value = {"/", ""})
+    @RequestMapping(value = {"/", ""})
     public String index() {
         return "index";
-    }
-    @GetMapping("/login")
-    public String login() {
-        return "customer/shop/login/index";
     }
     @GetMapping("/cart")
     public String cart() {
@@ -27,7 +26,6 @@ public class CustomerController {
     public String contact() {
         return "customer/shop/contact";
     }
-
     @GetMapping("/shop")
     public String shop() {
         return "customer/shop/shop";
@@ -36,4 +34,5 @@ public class CustomerController {
     public String detail() {
         return "customer/shop/detail";
     }
+
 }

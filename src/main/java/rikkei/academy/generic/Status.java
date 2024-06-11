@@ -1,4 +1,4 @@
-package rikkei.academy.modules;
+package rikkei.academy.generic;
 
 public enum Status {
     WAITING,
