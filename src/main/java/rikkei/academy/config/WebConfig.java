@@ -76,4 +76,9 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
                 .addResourceLocations("/uploads/","/access/access/admin/css/","/access/admin/js/","/access/admin/img/",
                         "/access/customer/css/","/access/customer/js/","/access/customer/img/","/access/customer/scss/","/access/login/cssLogin/","/access/login/jsLogin/");
     }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        WebMvcConfigurer.super.addInterceptors(registry);
+    }
 }

@@ -2,9 +2,10 @@ package rikkei.academy.modules.products;
 
 import lombok.*;
 import rikkei.academy.modules.category.Category;
-
+import rikkei.academy.modules.products.Image;
 import javax.persistence.*;
 import java.awt.*;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -28,6 +29,6 @@ public class Product {
     private int stock;
     private Date created_at;
     private Date updated_at;
-    private boolean status;
+    private boolean status=true;
     private String manufacturer;
 }
