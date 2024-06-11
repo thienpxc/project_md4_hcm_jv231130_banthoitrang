@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import rikkei.academy.modules.category.Category;
+import rikkei.academy.modules.products.Image;
 import rikkei.academy.modules.products.Product;
 
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ public class ProductResponse {
     private String name;
     private Double price;
     private String description;
-    private String image ;
+    private Image image ;
     private Integer stock;
     private Date createdAt;
     private Category category;
@@ -28,7 +29,7 @@ public class ProductResponse {
     public ProductResponse(Product product) {
         this.id  = product.getId();
         this.name = product.getName();
-        this.image = product.getImage();
+        this.image = new Image();
         this.createdAt = product.getCreated_at();
         this.description = product.getDescription();
         this.stock = product.getStock();

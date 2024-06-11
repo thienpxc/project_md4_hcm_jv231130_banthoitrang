@@ -3,6 +3,7 @@ package rikkei.academy.modules.products.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
+import rikkei.academy.modules.products.Image;
 import rikkei.academy.modules.products.dto.request.ProductRequest;
 import rikkei.academy.modules.products.dto.response.ProductResponse;
 import rikkei.academy.modules.products.Product;
@@ -24,7 +25,7 @@ public class ProductServicelmpl implements IProductService {
     private ProductDaolmpl productDaolmpl;
     @Autowired
     private ServletContext servletContext;
-    private static final String uploadFolder ="C:\\Users\\dokie.DOKIEU\\OneDrive\\Desktop\\md4\\src\\main\\Webapp\\uploads\\";
+    private static final String uploadFolder ="C:\\Users\\dokie.DOKIEU\\OneDrive\\Desktop\\md4\\src\\main\\Webapp\\uploads\\product\\";
 
     @Override
     public List<ProductResponse> findAllProduct() {
@@ -34,8 +35,8 @@ public class ProductServicelmpl implements IProductService {
 
 
     @Override
-    public Product findById(Integer id) {
-        return null;
+    public ProductResponse findById(Integer id) {
+        return new ProductResponse(productDaolmpl.findById(id));
     }
 
     @Override
@@ -66,7 +67,7 @@ public class ProductServicelmpl implements IProductService {
             try {
                 FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadPath + File.separator + fileName));
                 FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadFolder + fileName));
-                product.setImage("/uploads/" + fileName);
+//                product.setImage_id("/uploads/" + fileName);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
