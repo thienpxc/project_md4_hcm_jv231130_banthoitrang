@@ -3,23 +3,25 @@ package rikkei.academy.modules.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import rikkei.academy.modules.products.dto.request.ProductRequest;
 import rikkei.academy.modules.products.service.IProductService;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/admin")
-public class AdminController {
+public class ProductController {
     @Autowired
     private IProductService productService;
     @GetMapping()
     public String home(){
 
-        return "admin/index1";
+        return "admin/index";
     }
-    @GetMapping("/product")
+    //Produt
+    @GetMapping("product")
     public String product(@RequestParam(value = "page",defaultValue = "0") Integer page, @RequestParam(value = "limit",defaultValue = "3") Integer limit, Model model){
         long totalElements = productService.getTotalsElement();
         long nguyen = totalElements/limit;
@@ -35,6 +37,24 @@ public class AdminController {
 
         return "admin/product/product";
     }
+    @PostMapping("product/add")
+    public String addProduct(@Valid @ModelAttribute("product") ProductRequest request, BindingResult result,Model model){
+       if (result.hasErrors()) {
+           model.addAttribute("product",request);
+           return "admin/product/add";
+       }
+        productService.save(request);
+        return "redirect:/admin/product/product";
+
+
+    }
+    @GetMapping("product/add")
+    public String doAdd(Model model){
+        model.addAttribute("product",new ProductRequest());
+        return "/admin/product/add";
+    }
+
+
 
 
 }

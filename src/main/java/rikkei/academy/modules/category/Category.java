@@ -1,11 +1,10 @@
 package rikkei.academy.modules.category;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,12 +12,14 @@ import javax.persistence.Id;
 @Getter
 @Builder
 @Entity
+@Table(name = "Category")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private String description;
+    private String Image;
+    private Boolean status=true;
 
 
 }

@@ -3,6 +3,7 @@ package rikkei.academy.modules.products.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
+import rikkei.academy.modules.products.Image;
 import rikkei.academy.modules.products.dto.request.ProductRequest;
 import rikkei.academy.modules.products.dto.response.ProductResponse;
 import rikkei.academy.modules.products.Product;
@@ -24,7 +25,7 @@ public class ProductServicelmpl implements IProductService {
     private ProductDaolmpl productDaolmpl;
     @Autowired
     private ServletContext servletContext;
-    private static final String uploadFolder ="C:\\Users\\dokie.DOKIEU\\OneDrive\\Desktop\\md4\\src\\main\\Webapp\\uploads\\";
+    private static final String uploadFolder ="C:\\Users\\dokie.DOKIEU\\OneDrive\\Desktop\\md4\\src\\main\\Webapp\\uploads\\product\\";
 
     @Override
     public List<ProductResponse> findAllProduct() {
@@ -34,8 +35,8 @@ public class ProductServicelmpl implements IProductService {
 
 
     @Override
-    public Product findById(Integer id) {
-        return null;
+    public ProductResponse findById(Integer id) {
+        return new ProductResponse(productDaolmpl.findById(id));
     }
 
 //    @Override
@@ -73,6 +74,41 @@ public class ProductServicelmpl implements IProductService {
 //        }
 //        productDaolmpl.save(product);
 //    }
+    @Override
+    public void save(ProductRequest request) {
+        // chuyển đổi
+        Product product = new Product();
+        if (request.getId() != null){
+            // neu laf chuc nang cap nhap
+            product = productDaolmpl.findById(request.getId());
+        } else {
+            product.setCreated_at(new Date());
+            product.setStatus(true);
+        }
+        product.setName(request.getName());
+        product.setDescription(request.getDes());
+        product.setPrice(request.getPrice());
+        product.setStock(request.getStock());
+        product.setCategory_id(request.getCatalogId());
+
+        // upload mới
+        if (request.getImageUrl() != null && request.getImageUrl().getSize() != 0){
+            String uploadPath = servletContext.getRealPath("/uploads");
+            File folder = new File(uploadPath);
+            if (!folder.exists()){
+                folder.mkdirs();
+            }
+            String fileName = request.getImageUrl().getOriginalFilename();
+            try {
+                FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadPath + File.separator + fileName));
+                FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadFolder + fileName));
+//                product.setImage_id("/uploads/" + fileName);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        productDaolmpl.save(product);
+    }
 
     @Override
     public void delete(Integer id) {
