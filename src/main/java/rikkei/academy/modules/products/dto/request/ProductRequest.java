@@ -25,10 +25,10 @@ public class ProductRequest {
     @NotBlank(message = "Mô tả không được để trống")
     private String des;
     @NotNull
-    @Min(value = 0, message = "Giá không được nhỏ hơn 0")
+
     private double price;
     @NotNull
-    @Min(value = 0, message = "Số lượng không được nhỏ hơn 0")
+
     private int stock;
     private MultipartFile imageUrl;
     private boolean status = true;

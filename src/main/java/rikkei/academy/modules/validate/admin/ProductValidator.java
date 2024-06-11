@@ -12,8 +12,8 @@ public class ProductValidator implements ConstraintValidator<ProductUnique,Strin
     private IProductService productService;
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-        // nếu hợp lệ trả về true
-        // nếu ko thì false
+
+
         return  !productService.existByName(value);
     }
 }

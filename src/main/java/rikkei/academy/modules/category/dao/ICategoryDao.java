@@ -1,6 +1,7 @@
 package rikkei.academy.modules.category.dao;
 
-import rikkei.academy.modules.IGenericDao;
+
+import rikkei.academy.generic.IGenericDao;
 import rikkei.academy.modules.category.Category;
 import rikkei.academy.modules.category.dto.request.CategoryRequeest;
 import rikkei.academy.modules.products.Product;
