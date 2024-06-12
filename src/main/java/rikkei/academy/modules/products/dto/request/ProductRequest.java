@@ -20,14 +20,29 @@ public class ProductRequest {
     private Integer id;
     @NotBlank(message = "Tên không được để trống")
     private String name;
-    private Category catalogId;
+    private Integer catalogId;
     @NotBlank(message = "Mô tả không được để trống")
     private String des;
     @NotNull
     private double price;
     @NotNull
     private int stock;
+    @NotNull
+    private String manufacturer;
     private List<MultipartFile> images;
     private boolean status = true;
 
+    @Override
+    public String toString() {
+        return "ProductRequest{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", catalogId=" + catalogId +
+                ", des='" + des + '\'' +
+                ", price=" + price +
+                ", stock=" + stock +
+                ", images=" + images +
+                ", status=" + status +
+                '}';
+    }
 }

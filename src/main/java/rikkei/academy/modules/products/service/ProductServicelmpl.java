@@ -3,6 +3,7 @@ package rikkei.academy.modules.products.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
+import rikkei.academy.modules.category.service.ICategoryService;
 import rikkei.academy.modules.products.ProductImages;
 import rikkei.academy.modules.products.dto.request.ProductRequest;
 import rikkei.academy.modules.products.dto.response.ProductResponse;
@@ -27,55 +28,20 @@ public class ProductServicelmpl implements IProductService {
     private ProductDaolmpl productDaolmpl;
     @Autowired
     private ServletContext servletContext;
+    @Autowired
+    private ICategoryService categoryService;
     private static final String uploadFolder = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
 
     @Override
-    public List<ProductResponse> findAllProduct() {
-        List<Product> list = productDaolmpl.findAll();
-        return list.stream().map(ProductResponse::new).collect(Collectors.toList());
+    public List<Product> findAllProduct() {
+        return productDaolmpl.findAll();
     }
-
 
     @Override
     public ProductResponse findById(Integer id) {
         return new ProductResponse(productDaolmpl.findById(id));
     }
 
-    //    @Override
-//    public void save(ProductRequest request) {
-//        // chuyển đổi
-//        Product product = new Product();
-//        if (request.getId() != null){
-//            // neu laf chuc nang cap nhap
-//            product = productDaolmpl.findById(request.getId());
-//        } else {
-//            product.setCreated_at(new Date());
-//            product.setStatus(true);
-//        }
-//        product.setName(request.getName());
-//        product.setDescription(request.getDes());
-//        product.setPrice(request.getPrice());
-//        product.setStock(request.getStock());
-//        product.setCategory_id(request.getCatalogId());
-//
-//        // upload mới
-//        if (request.getImageUrl() != null && request.getImageUrl().getSize() != 0){
-//            String uploadPath = servletContext.getRealPath("/uploads");
-//            File folder = new File(uploadPath);
-//            if (!folder.exists()){
-//                folder.mkdirs();
-//            }
-//            String fileName = request.getImageUrl().getOriginalFilename();
-//            try {
-//                FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadPath + File.separator + fileName));
-//                FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadFolder + fileName));
-//                product.setImage("/uploads/" + fileName);
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//        productDaolmpl.save(product);
-//    }
     @Override
     public void save(ProductRequest request) {
         // chuyển đổi
@@ -91,8 +57,8 @@ public class ProductServicelmpl implements IProductService {
         product.setDescription(request.getDes());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
-        product.setCategoryId(request.getCatalogId());
-
+        product.setCategoryId(categoryService.findCategoryById(request.getCatalogId()));
+        product.setManufacturer(request.getManufacturer());
         // upload mới
         if (request.getImages() != null && request.getImages().size() != 0) {
             String uploadPath = servletContext.getRealPath("/uploads");
