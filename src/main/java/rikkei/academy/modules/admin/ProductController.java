@@ -15,9 +15,8 @@ import javax.validation.Valid;
 public class ProductController {
     @Autowired
     private IProductService productService;
-    @GetMapping()
+    @GetMapping("")
     public String home(){
-
         return "admin/index";
     }
     //Produt

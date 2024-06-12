@@ -32,10 +32,14 @@ public class LoginController {
     @PostMapping("/doLogin")
     public String doLogin(@ModelAttribute("loginForm") LoginForm form, HttpSession session) {
         Customer customer = userService.getUserByUserName(form.getUsername());
+        System.out.println("day ne" +customer.toString());
+        if(customer == null || !customer.getPassword().equals(form.getPassword())){
+            return "redirect:/auth";
+        }
         session.setAttribute("loginUser", customer);
         session.setAttribute("login", "login");
         if(customer.getRole()){
-            return "redirect:/admin/index"; // admin page
+            return "redirect:/admin"; // admin page
         }
         return "redirect:/customer"; // customer page
     }

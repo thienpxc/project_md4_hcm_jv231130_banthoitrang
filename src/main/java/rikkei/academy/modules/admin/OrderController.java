@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class OrderController {
     @GetMapping("order")
     public String order(){
-
         return "admin/order/order";
     }
 }

@@ -12,8 +12,6 @@ public class ProductValidator implements ConstraintValidator<ProductUnique,Strin
     private IProductService productService;
     @Override
     public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-
-
         return  !productService.existByName(value);
     }
 }
