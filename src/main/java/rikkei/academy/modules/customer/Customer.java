@@ -24,30 +24,16 @@ public class Customer {
     }
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     @Id
-    private Integer customer_id;
-    private String customer_name;
+    private Integer customerId;
+    private String customerName;
     private String email;
     private String password;
-    private String phone_number;
+    private String phoneNumber;
     private String address;
     private String avatar;
     private Boolean role = false;
     private Boolean status = true;
-    private Date created_at;
+    private Date createdAt;
     private Gender gender;
 
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "customer_id=" + customer_id +
-                ", customer_name='" + customer_name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", phone_number='" + phone_number + '\'' +
-                ", address='" + address + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", role=" + role +
-                ", status=" + status +
-                ", created_at=" + created_at + '\'' + "}";
-    }
 }
