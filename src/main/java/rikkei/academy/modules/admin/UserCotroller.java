@@ -10,7 +10,6 @@ public class UserCotroller {
     //user
     @GetMapping("user")
     public String user(){
-
         return "admin/user/user";
     }
 }
