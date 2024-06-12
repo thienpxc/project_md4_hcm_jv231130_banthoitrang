@@ -40,13 +40,11 @@ public class LoginController {
         session.setAttribute("login", "login");
         if(customer.getRole()){
 
-
-
             return "redirect:/admin"; // admin page
-
         }
         return "redirect:/customer"; // customer page
     }
+
     @PostMapping("/doRegister")
     public String doRegister(@ModelAttribute("registerForm") RegisterForm form) {
         userService.save(form);

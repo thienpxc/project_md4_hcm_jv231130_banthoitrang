@@ -26,7 +26,7 @@ public class UserServicelmpl implements IUserService {
 
     @Override
     public Customer converFormRegisterToUser(RegisterForm form) {
-        return new Customer(null, form.getUsername(), form.getEmail(), form.getPassword(), null, null, null, false, true, new Date(), null);
+        return new Customer(null, form.getUsername(), form.getEmail(), form.getPassword(), null, null, null, false, true, new Date(),null, null);
     }
 
 }

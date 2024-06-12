@@ -28,7 +28,7 @@ public class UserDaolmpl implements IUserDao{
     @Override
     public Customer getUserByUserName(String userName) {
         Session session = sessionFactory.getCurrentSession();
-        String sql = "from Customer where customer_name = :userName";
+        String sql = "from Customer where customerName = :userName";
         return (Customer) session.createQuery(sql).setParameter("userName", userName).getSingleResult();
     }
 

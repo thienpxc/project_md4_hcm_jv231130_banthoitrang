@@ -1,6 +1,7 @@
 package rikkei.academy.modules.orderDetail;
-
+import rikkei.academy.modules.order.Orders;
 import lombok.*;
+import rikkei.academy.modules.products.Product;
 
 import javax.persistence.*;
 
@@ -14,11 +15,13 @@ import javax.persistence.*;
 public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer order_item_id;
-//    @ManyToOne
-//    @JoinColumn(name = "order_id")
-//    private Order order_id;
-    private String product_id;
+    private Integer orderItemId;
+    @ManyToOne
+    @JoinColumn(name = "orderId")
+    private Orders orderId;
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product productId;
     private double price;
     private int quantity;
 }
