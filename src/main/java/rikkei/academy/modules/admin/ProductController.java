@@ -41,6 +41,7 @@ public class ProductController {
     @PostMapping("product/add")
     public String addProduct(@Valid @ModelAttribute("product") ProductRequest request, BindingResult result,Model model){
         List<Category> categories = categoryService.findAllCategory();
+        System.out.println("request = " + request.toString());
        if (result.hasErrors()) {
            model.addAttribute("categories",categories);
            model.addAttribute("product",request);
@@ -48,11 +49,11 @@ public class ProductController {
        }
         productService.save(request);
         return "redirect:/admin/product";
-
-
     }
     @GetMapping("product/add")
     public String doAdd(Model model){
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
         model.addAttribute("product",new ProductRequest());
         return "/admin/product/add";
     }

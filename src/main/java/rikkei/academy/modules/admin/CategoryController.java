@@ -5,10 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import rikkei.academy.modules.category.Category;
-import rikkei.academy.modules.category.dto.request.CategoryRequeest;
+import rikkei.academy.modules.category.dto.request.CategoryRequest;
 import rikkei.academy.modules.category.service.ICategoryService;
-import rikkei.academy.modules.products.dto.request.ProductRequest;
 
 import javax.validation.Valid;
 
@@ -29,17 +27,17 @@ public class CategoryController {
         model.addAttribute("totalPages",totalPages);
         model.addAttribute("page",page);
         model.addAttribute("limit",limit);
-        model.addAttribute("newCategory",new CategoryRequeest());
+        model.addAttribute("newCategory",new CategoryRequest());
 
         return "admin/category/category";
     }
     @GetMapping("category/add")
     public String addCategory(Model model){
-        model.addAttribute("newCategory",new CategoryRequeest());
+        model.addAttribute("newCategory",new CategoryRequest());
         return "admin/category/add";
     }
     @PostMapping("category/add")
-    public String doAdd(@Valid @ModelAttribute("newCategory") CategoryRequeest category, BindingResult result, Model model){
+    public String doAdd(@Valid @ModelAttribute("newCategory") CategoryRequest category, BindingResult result, Model model){
         if (result.hasErrors()) {
             model.addAttribute("newCategory",category);
             return "admin/category/add";
@@ -54,7 +52,7 @@ public class CategoryController {
     }
     @GetMapping("/product/edit/{id}")
     @ResponseBody
-    public CategoryRequeest  edit(@PathVariable Integer id){
+    public CategoryRequest edit(@PathVariable Integer id){
         return categoryService.findById(id);
     }
 

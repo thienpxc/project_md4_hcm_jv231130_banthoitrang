@@ -4,19 +4,15 @@ package rikkei.academy.modules.category.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.multipart.MultipartFile;
 import rikkei.academy.modules.category.Category;
 import rikkei.academy.modules.category.dao.ICategoryDao;
-import rikkei.academy.modules.category.dto.request.CategoryRequeest;
-import rikkei.academy.modules.products.Product;
+import rikkei.academy.modules.category.dto.request.CategoryRequest;
 
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,11 +23,13 @@ public class CategoryServicelmpl implements ICategoryService{
     @Autowired
     private ServletContext servletContext;
    @Override
-    public CategoryRequeest findById(Integer id) {
-
-         return new CategoryRequeest(categoryDao.findById(id));
+    public CategoryRequest findById(Integer id) {
+         return new CategoryRequest(categoryDao.findById(id));
     }
-
+    @Override
+    public Category findCategoryById(Integer id){
+       return categoryDao.findById(id);
+    }
     @Override
     public void delete(Integer id) {
         categoryDao.delete(id);
@@ -49,7 +47,7 @@ public class CategoryServicelmpl implements ICategoryService{
     }
 
     @Override
-    public void save(CategoryRequeest request) {
+    public void save(CategoryRequest request) {
         // chuyển đổi
         Category category = new Category();
         if (request.getId() != null){
@@ -73,11 +71,7 @@ public class CategoryServicelmpl implements ICategoryService{
             try {
                 FileCopyUtils.copy(request.getImage().getBytes(), new File(uploadPath + File.separator + fileName));
                 FileCopyUtils.copy(request.getImage().getBytes(), new File(uploadFolder + fileName));
-<<<<<<< HEAD
-                category.setImage("/uploads" + fileName);
-=======
                 category.setImage("/uploads/category/" + fileName);
->>>>>>> 8bd1030 (add)
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
