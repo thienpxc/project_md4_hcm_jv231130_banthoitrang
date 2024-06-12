@@ -79,4 +79,5 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
                         "/access/customer/css/","/access/customer/js/","/access/customer/img/","/access/customer/scss/","/access/login/cssLogin/","/access/login/jsLogin/");
     }
 
+
 }

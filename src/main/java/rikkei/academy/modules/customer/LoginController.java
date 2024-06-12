@@ -39,7 +39,11 @@ public class LoginController {
         session.setAttribute("loginUser", customer);
         session.setAttribute("login", "login");
         if(customer.getRole()){
+
+
+
             return "redirect:/admin"; // admin page
+
         }
         return "redirect:/customer"; // customer page
     }

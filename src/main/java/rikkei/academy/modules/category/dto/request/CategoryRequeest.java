@@ -22,7 +22,7 @@ public class CategoryRequeest {
     public CategoryRequeest(Category category) {
         this.id = category.getId();
         this.name = category.getName();
-        // Không thể chuyển đổi Image vì nó là MultipartFile
+
     }
 
 }
