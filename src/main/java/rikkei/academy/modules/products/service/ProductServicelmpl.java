@@ -3,7 +3,7 @@ package rikkei.academy.modules.products.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
-import rikkei.academy.modules.products.Image;
+import rikkei.academy.modules.products.ProductImages;
 import rikkei.academy.modules.products.dto.request.ProductRequest;
 import rikkei.academy.modules.products.dto.response.ProductResponse;
 import rikkei.academy.modules.products.Product;
@@ -11,9 +11,11 @@ import rikkei.academy.modules.products.dao.ProductDaolmpl;
 
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +27,7 @@ public class ProductServicelmpl implements IProductService {
     private ProductDaolmpl productDaolmpl;
     @Autowired
     private ServletContext servletContext;
-    private static final String uploadFolder ="C:\\Users\\dokie.DOKIEU\\OneDrive\\Desktop\\md4\\src\\main\\Webapp\\uploads\\product\\";
+    private static final String uploadFolder = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
 
     @Override
     public List<ProductResponse> findAllProduct() {
@@ -39,7 +41,7 @@ public class ProductServicelmpl implements IProductService {
         return new ProductResponse(productDaolmpl.findById(id));
     }
 
-//    @Override
+    //    @Override
 //    public void save(ProductRequest request) {
 //        // chuyển đổi
 //        Product product = new Product();
@@ -78,34 +80,41 @@ public class ProductServicelmpl implements IProductService {
     public void save(ProductRequest request) {
         // chuyển đổi
         Product product = new Product();
-        if (request.getId() != null){
+        if (request.getId() != null) {
             // neu laf chuc nang cap nhap
             product = productDaolmpl.findById(request.getId());
         } else {
-            product.setCreated_at(new Date());
+            product.setCreatedAt(new Date());
             product.setStatus(true);
         }
         product.setName(request.getName());
         product.setDescription(request.getDes());
         product.setPrice(request.getPrice());
         product.setStock(request.getStock());
-        product.setCategory_id(request.getCatalogId());
+        product.setCategoryId(request.getCatalogId());
 
         // upload mới
-        if (request.getImageUrl() != null && request.getImageUrl().getSize() != 0){
+        if (request.getImages() != null && request.getImages().size() != 0) {
             String uploadPath = servletContext.getRealPath("/uploads");
             File folder = new File(uploadPath);
-            if (!folder.exists()){
+            if (!folder.exists()) {
                 folder.mkdirs();
             }
-            String fileName = request.getImageUrl().getOriginalFilename();
-            try {
-                FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadPath + File.separator + fileName));
-                FileCopyUtils.copy(request.getImageUrl().getBytes(), new File(uploadFolder + fileName));
-//                product.setImage_id("/uploads/" + fileName);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            List<ProductImages> productImagesList = new ArrayList<>();
+            for (int i = 0; i < request.getImages().size(); i++) {
+                ProductImages productImages = new ProductImages();
+                String fileName = request.getImages().get(i).getOriginalFilename();
+                try {
+                    FileCopyUtils.copy(request.getImages().get(i).getBytes(), new File(uploadPath + File.separator + fileName));
+                    FileCopyUtils.copy(request.getImages().get(i).getBytes(), new File(uploadFolder + fileName));
+                    productImages.setUrl("/uploads/" + fileName);
+                    productImages.setProduct(product);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                productImagesList.add(productImages);
             }
+            product.setImages(productImagesList);
         }
         productDaolmpl.save(product);
     }
@@ -118,7 +127,7 @@ public class ProductServicelmpl implements IProductService {
 
     @Override
     public List<Product> findByPagination(Integer page, Integer limit) {
-        return productDaolmpl.findByPagination(page, limit);
+        return productDaolmpl.findByPagination(page,limit);
     }
 
     @Override

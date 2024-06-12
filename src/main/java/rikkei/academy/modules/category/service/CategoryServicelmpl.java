@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class CategoryServicelmpl implements ICategoryService{
-    private static final String uploadFolder = "C:\\Users\\dokie.DOKIEU\\OneDrive\\Desktop\\md4\\src\\main\\Webapp\\uploads\\category\\";
+    private static final String uploadFolder = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\category\\";
     @Autowired
     private ICategoryDao categoryDao;
     @Autowired
@@ -73,7 +73,7 @@ public class CategoryServicelmpl implements ICategoryService{
             try {
                 FileCopyUtils.copy(request.getImage().getBytes(), new File(uploadPath + File.separator + fileName));
                 FileCopyUtils.copy(request.getImage().getBytes(), new File(uploadFolder + fileName));
-                category.setImage("/uploads/" + fileName);
+                category.setImage("/uploads" + fileName);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

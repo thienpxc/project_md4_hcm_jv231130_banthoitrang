@@ -10,7 +10,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 @Override
 public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     Customer user = (Customer) request.getSession().getAttribute("loginUser");
-    System.out.println(user);
     if (user == null) {
         response.sendRedirect("/auth");
         return false;

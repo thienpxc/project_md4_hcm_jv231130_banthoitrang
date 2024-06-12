@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import rikkei.academy.modules.products.Product;
+import rikkei.academy.modules.products.ProductImages;
 
 import java.util.List;
 
@@ -28,15 +29,22 @@ public class ProductDaolmpl implements IProductDao{
     public void save(Product product) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(product);
-
     }
 
     @Override
     public void delete(Integer id) {
         Session session = sessionFactory.getCurrentSession();
         Product product = session.get(Product.class,id);
-        session.delete(product);
+        if (product != null){
+            product.setStatus(false);
+            session.update(product);
+        }
+    }
 
+    @Override
+    public void saveProductImages(ProductImages productImages) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(productImages);
     }
 
     @Override
@@ -46,8 +54,6 @@ public class ProductDaolmpl implements IProductDao{
                 .setMaxResults(size)
                 .setFirstResult(page*size)
                 .list();
-
-
     }
 
     @Override

@@ -2,12 +2,10 @@ package rikkei.academy.modules.products;
 
 import lombok.*;
 import rikkei.academy.modules.category.Category;
-import rikkei.academy.modules.products.Image;
-import javax.persistence.*;
-import java.awt.*;
 
-import java.time.LocalDateTime;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,13 +20,15 @@ public class Product {
     private Integer id;
     private String name;
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category_id;
+    @JoinColumn(name = "categoryId")
+    private Category categoryId;
     private String description;
     private double price;
     private int stock;
-    private Date created_at;
-    private Date updated_at;
-    private boolean status=true;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
+    private List<ProductImages> images;
+    private Date createdAt;
+    private Date updatedAt;
+    private boolean status = true;
     private String manufacturer;
 }

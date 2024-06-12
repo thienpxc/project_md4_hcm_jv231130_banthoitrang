@@ -12,12 +12,12 @@
 <form action="/admin/category/add" method="post"  enctype="multipart/form-data" th:object="${newCategory}">
     <div class="modal-content">
         <div class="modal-header">
-            <h1 class="modal-title fs-5" >Add New Product</h1>
+            <h1 class="modal-title fs-5" >Add New Category</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <div class="mb-3">
-                <label  class="form-label">Product Name</label>
+                <label  class="form-label">Category Name</label>
                 <input type="text" class="form-control" th:field="*{name}">
                 <p class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
             </div>

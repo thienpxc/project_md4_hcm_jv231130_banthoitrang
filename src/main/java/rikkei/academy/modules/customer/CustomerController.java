@@ -19,8 +19,8 @@ public class CustomerController {
     private IProductService productService;
     @RequestMapping(value = {"/", ""})
     public String index(Model model) {
-        model.addAttribute("productHome",productService.findAllProduct());
-        model.addAttribute("categoryHome",categoryService.findAllCategory());
+//        model.addAttribute("productHome",productService.findAllProduct());
+//        model.addAttribute("categoryHome",categoryService.findAllCategory());
         return "index";
     }
     @GetMapping("/cart")
