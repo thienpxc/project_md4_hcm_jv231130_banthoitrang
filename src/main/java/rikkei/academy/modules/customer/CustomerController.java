@@ -6,9 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import rikkei.academy.modules.category.service.ICategoryService;
-import rikkei.academy.modules.customer.dto.loginDto.LoginForm;
-import rikkei.academy.modules.customer.dto.loginDto.RegisterForm;
 import rikkei.academy.modules.products.service.IProductService;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = {"/customer", ""})
@@ -18,10 +18,37 @@ public class CustomerController {
     @Autowired
     private IProductService productService;
     @RequestMapping(value = {"/", ""})
-    public String index(Model model) {
-//        model.addAttribute("productHome",productService.findAllProduct());
-//        model.addAttribute("categoryHome",categoryService.findAllCategory());
+
+    public String index(HttpSession session, Model model) {
+        Customer customer = (Customer) session.getAttribute("loginUser");
+        model.addAttribute("customer", customer);
+        model.addAttribute("productHome",productService.findAllProduct());
+        model.addAttribute("categoryHome",categoryService.findAllCategory());
+
         return "index";
+    }
+    @GetMapping("/profile")
+    public String showProfile(HttpSession session, Model model) {
+        Customer customer = (Customer) session.getAttribute("loginUser");
+        if (customer != null) {
+            model.addAttribute("customer", customer);
+            return "customer/shop/profile";
+        } else {
+            return "redirect:/auth";
+        }
+    }
+    @GetMapping("/profile/edit")
+    public String showRegistrationForm(HttpSession session,Model model) {
+        Customer customer = (Customer) session.getAttribute("loginUser");
+        model.addAttribute("customer", customer);
+
+        return "customer/shop/profile/edit";
+    }
+    @GetMapping("/profile/order")
+    public String login(HttpSession session,Model model) {
+        Customer customer = (Customer) session.getAttribute("loginUser");
+        model.addAttribute("customer", customer);
+        return "customer/shop/profile/order";
     }
     @GetMapping("/cart")
     public String cart() {

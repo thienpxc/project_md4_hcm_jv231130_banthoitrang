@@ -1,13 +1,12 @@
 package rikkei.academy.modules.customer;
 
 import lombok.*;
+import rikkei.academy.modules.order.Orders;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,10 +17,7 @@ import java.util.Date;
 @Entity
 public class Customer {
 
-    public enum Gender {
-        MALE,
-        FEMALE
-    }
+
     @GeneratedValue(strategy = javax.persistence.GenerationType.IDENTITY)
     @Id
     private Integer customerId;
@@ -34,6 +30,12 @@ public class Customer {
     private Boolean role = false;
     private Boolean status = true;
     private Date createdAt;
-    private Gender gender;
+
+    @OneToMany(mappedBy = "customer",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private List<Orders> orders;
+    private Boolean gender;
+
+
+
 
 }

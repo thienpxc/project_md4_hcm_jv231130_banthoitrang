@@ -64,7 +64,7 @@ public class CategoryServicelmpl implements ICategoryService{
 
         // upload mới
         if (request.getImage() != null && request.getImage().getSize() != 0){
-            String uploadPath = servletContext.getRealPath("/uploads");
+            String uploadPath = servletContext.getRealPath("/uploads/category/");
             File folder = new File(uploadPath);
             if (!folder.exists()){
                 folder.mkdirs();
@@ -73,7 +73,11 @@ public class CategoryServicelmpl implements ICategoryService{
             try {
                 FileCopyUtils.copy(request.getImage().getBytes(), new File(uploadPath + File.separator + fileName));
                 FileCopyUtils.copy(request.getImage().getBytes(), new File(uploadFolder + fileName));
+<<<<<<< HEAD
                 category.setImage("/uploads" + fileName);
+=======
+                category.setImage("/uploads/category/" + fileName);
+>>>>>>> 8bd1030 (add)
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

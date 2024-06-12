@@ -3,10 +3,12 @@ package rikkei.academy.modules.order;
 import lombok.*;
 import rikkei.academy.generic.Status;
 import rikkei.academy.modules.customer.Customer;
+import rikkei.academy.modules.orderDetail.OrderDetail;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +18,7 @@ import java.util.Date;
 @Table(name = "Orders")
 @Entity
 public class Orders {
+
     public enum OderStatus {
         PENDING,
         CONFIRMED,
@@ -26,16 +29,19 @@ public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer order_id;
-//    @ManyToOne
-////    @JoinColumn(name = "customer_id")
-////    private Customer customer_id;
-    private Date order_date;
-    private String total_amount;
-    private String shipping_address;
-    private String payment_method;
-    private OderStatus order_status;
-    private Status shipping_method;
-    private LocalDateTime order_at;
-    private LocalDateTime deliver_at;
+    private Integer orderId;
+    private Date orderDate;
+    private String totalAmount;
+    private String shippingAddress;
+    private String paymentMethod;
+    @Enumerated(EnumType.STRING)
+    private OderStatus orderStatus = OderStatus.PENDING;
+    @ManyToOne
+    @JoinColumn(name = "customerId")
+    private Customer customer;
+    private Status shippingMethod = Status.WAITING;
+    @OneToMany(mappedBy = "orderId",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    private List<OrderDetail> orderDetails;
+    private LocalDateTime orderAt;
+    private LocalDateTime deliverAt;
 }
