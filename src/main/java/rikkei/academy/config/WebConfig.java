@@ -58,7 +58,9 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/admin/**","/customer/**");
+        System.out.println("addInterceptors");
+        registry.addInterceptor(new AuthInterceptor()).addPathPatterns("/admin/**","");
+
     }
 
     // cấu hình file upload
@@ -73,12 +75,8 @@ public class WebConfig implements WebMvcConfigurer, ApplicationContextAware {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/uploads/**","/css/**","/js/**","/img/**","/scss/**","/cssLogin/**","/jsLogin/**")
-                .addResourceLocations("/uploads/","/access/access/admin/css/","/access/admin/js/","/access/admin/img/",
+                .addResourceLocations("/uploads/","/access/admin/css/","/access/admin/js/","/access/admin/img/",
                         "/access/customer/css/","/access/customer/js/","/access/customer/img/","/access/customer/scss/","/access/login/cssLogin/","/access/login/jsLogin/");
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        WebMvcConfigurer.super.addInterceptors(registry);
-    }
 }

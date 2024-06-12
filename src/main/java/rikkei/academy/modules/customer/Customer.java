@@ -35,4 +35,19 @@ public class Customer {
     private Boolean status = true;
     private Date created_at;
     private Gender gender;
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customer_id=" + customer_id +
+                ", customer_name='" + customer_name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", phone_number='" + phone_number + '\'' +
+                ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", role=" + role +
+                ", status=" + status +
+                ", created_at=" + created_at + '\'' + "}";
+    }
 }
