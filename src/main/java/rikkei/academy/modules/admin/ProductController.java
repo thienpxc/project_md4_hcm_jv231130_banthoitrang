@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import rikkei.academy.modules.category.Category;
 import rikkei.academy.modules.category.service.ICategoryService;
+import rikkei.academy.modules.products.Product;
 import rikkei.academy.modules.products.dto.request.ProductRequest;
 import rikkei.academy.modules.products.dto.response.ProductResponse;
 import rikkei.academy.modules.products.service.IProductService;
@@ -58,19 +59,26 @@ public class ProductController {
         return "/admin/product/add";
     }
     @GetMapping("product/edit")
-    public String editProduct(@RequestParam("id") Integer id, Model model){
-        ProductResponse product = productService.findById(id);
-        model.addAttribute("product",product);
+    public String editProduct( @RequestParam ("id") Integer id, Model model){
+        Product product = productService.findById(id);
+        List<Category> categories = categoryService.findAllCategory();
+        ProductRequest productRequest = productService.updatePro(product);
+        model.addAttribute("categories",categories);
+        model.addAttribute("productEdit",productRequest);
         return "admin/product/edit";
     }
 
     @PostMapping("product/edit")
-    public String doEdit(@Valid @ModelAttribute("product") ProductRequest request, BindingResult result,Model model){
+    public String doEdit(@Valid @ModelAttribute("productEdit") ProductRequest request, BindingResult result, Model model){
+        System.out.println("request" + request.toString());
+        Product product = productService.findById(request.getId());
+        List<Category> categories = categoryService.findAllCategory();
         if (result.hasErrors()) {
-            model.addAttribute("product",request);
-            return "admin/product/edit";
+            model.addAttribute("categories",categories);
+            model.addAttribute("productEdit",request);
+            return "redirect:/admin/product/edit?id="+request.getId(); // chuyển hướng về trang edit
         }
-        productService.save(request);
+        productService.update(productService.updateProduct(request,product));
         return "redirect:/admin/product";
     }
     @GetMapping("product/delete")

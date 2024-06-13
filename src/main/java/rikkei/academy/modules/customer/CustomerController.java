@@ -18,13 +18,11 @@ public class CustomerController {
     @Autowired
     private IProductService productService;
     @RequestMapping(value = {"/", ""})
-
     public String index(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("loginUser");
         model.addAttribute("customer", customer);
         model.addAttribute("productHome",productService.findAllProduct());
         model.addAttribute("categoryHome",categoryService.findAllCategory());
-
         return "index";
     }
     @GetMapping("/profile")

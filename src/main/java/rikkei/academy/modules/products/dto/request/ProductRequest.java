@@ -20,6 +20,7 @@ public class ProductRequest {
     private Integer id;
     @NotBlank(message = "Tên không được để trống")
     private String name;
+    @NotNull(message = "Danh mục không được để trống")
     private Integer catalogId;
     @NotBlank(message = "Mô tả không được để trống")
     private String des;
@@ -29,6 +30,7 @@ public class ProductRequest {
     private int stock;
     @NotNull
     private String manufacturer;
+    private List<String> oldImageUrls;
     private List<MultipartFile> images;
     private boolean status = true;
 
