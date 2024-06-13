@@ -21,6 +21,13 @@ public class LoginController {
 
     @Autowired
     private IUserService userService;
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("loginUser");
+        session.removeAttribute("login");
+        return "redirect:/customer";
+    }
     @GetMapping("/auth")
     public String showRegistrationForm(Model model) {
         RegisterForm registerForm = new RegisterForm();

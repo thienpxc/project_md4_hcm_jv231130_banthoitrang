@@ -633,7 +633,7 @@
                   </td>
                     <td th:text="${pro.price}"></td>
                     <td th:text="${pro.createdAt}"></td>
-                  <td><a href="" class="btn btn-warning" th:onclick="|handleEditProduct(${pro.id})|"  data-bs-toggle="modal" data-bs-target="#editModal">Edit</a></td>
+                  <td><a th:href="|/admin/product/edit?id=${pro.id}|" class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#editModal">Edit</a></td>
                   <td><a th:href="|/admin/product/delete?id=${pro.id}|" onclick="return confirm('Bạn có chắc  chắn muốn xóa ko ?')" class="btn btn-danger">Delete</a></td>
                 </tr>
                 </tbody>
@@ -652,9 +652,6 @@
                 </li>
               </ul>
             </nav>
-
-
-
           </div>
         </main>
       </div>

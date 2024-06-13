@@ -24,7 +24,11 @@ public class ProductDaolmpl implements IProductDao{
         Session session = sessionFactory.getCurrentSession();
         return session.get(Product.class,id);
     }
-
+    @Override
+    public void update(Product product){
+        Session session = sessionFactory.getCurrentSession();
+        session.update(product);
+    }
     @Override
     public void save(Product product) {
         Session session = sessionFactory.getCurrentSession();

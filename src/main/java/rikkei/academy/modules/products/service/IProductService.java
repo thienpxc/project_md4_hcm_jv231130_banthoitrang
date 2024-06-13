@@ -8,11 +8,14 @@ import rikkei.academy.generic.IGeneric;
 
 import java.util.List;
 
-public interface IProductService extends IGeneric<ProductResponse,Integer> {
+public interface IProductService extends IGeneric<Product,Integer> {
+    ProductRequest updatePro(Product p);
     List<Product> findAllProduct();
     List<Product> findByPagination(Integer page ,Integer limit);
     void save(ProductRequest request);
     List<ProductResponse> searchByName(String keyword);
     long getTotalsElement();
     boolean existByName(String name);
+    Product updateProduct(ProductRequest pro,Product product);
+    public void update(Product product);
 }

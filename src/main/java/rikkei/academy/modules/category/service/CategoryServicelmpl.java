@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @Transactional
 public class CategoryServicelmpl implements ICategoryService{
-    private static final String uploadFolder = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\category\\";
+    public static final String uploadFolder = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\category\\";
     @Autowired
     private ICategoryDao categoryDao;
     @Autowired
