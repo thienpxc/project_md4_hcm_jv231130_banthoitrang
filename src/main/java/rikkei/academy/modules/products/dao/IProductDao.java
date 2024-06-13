@@ -13,4 +13,6 @@ public interface IProductDao extends IGenericDao<Product,Integer> {
     long getTotalsElement();
     boolean existByName(String name);
     public void update(Product product);
+
+    void deleteImage(Integer id);
 }

@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @Transactional
 public class CategoryServicelmpl implements ICategoryService{
-    public static final String uploadFolder = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\category\\";
+    public static final String uploadFolderCategory = "C:\\Users\\LACKY\\Desktop\\project\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\category\\";
     @Autowired
     private ICategoryDao categoryDao;
     @Autowired
@@ -70,7 +70,7 @@ public class CategoryServicelmpl implements ICategoryService{
             String fileName = request.getImage().getOriginalFilename();
             try {
                 FileCopyUtils.copy(request.getImage().getBytes(), new File(uploadPath + File.separator + fileName));
-                FileCopyUtils.copy(request.getImage().getBytes(), new File(uploadFolder + fileName));
+                FileCopyUtils.copy(request.getImage().getBytes(), new File(uploadFolderCategory + fileName));
                 category.setImage("/uploads/category/" + fileName);
             } catch (IOException e) {
                 throw new RuntimeException(e);

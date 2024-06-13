@@ -30,7 +30,6 @@ public class Customer {
     private Boolean role = false;
     private Boolean status = true;
     private Date createdAt;
-
     @OneToMany(mappedBy = "customer",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Orders> orders;
     private Boolean gender;

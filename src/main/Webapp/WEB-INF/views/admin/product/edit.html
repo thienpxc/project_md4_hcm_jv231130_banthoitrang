@@ -34,8 +34,16 @@
                 </label>
             </div>
             <div class="mb-3">
-                <label class="form-label">Product old image</label>
-                <img th:src="*{oldImageUrls.get(0)}" style="width: 100px; height: 100px">
+                <label class="form-label">Product old images</label>
+                <div style="display: flex; overflow-x: auto;">
+                    <div th:each="image : *{oldImage}">
+                        <div class="image-container">
+                            <input type="hidden" name="imageId"  th:value="${image.id}">
+                            <img th:src="${image.url}" style="width: 100px; height: 100px; object-fit: cover; margin-right: 10px;">
+                            <button class="delete-button">&#x2718;</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <label class="form-label">Product Image</label>
@@ -78,5 +86,27 @@
         </div>
     </div>
 </form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.delete-button').click(function () {
+            let imageId = $(this).prev().attr('data-id');
+            let imageContainer = $(this).parent();
+            $.ajax({
+                url: '/admin/product/deleteImage',
+                type: 'POST',
+                data: {
+                    imageId: imageId
+                },
+                success: function (response) {
+                    if (response === 'success') {
+                        imageContainer.remove();
+                    }
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

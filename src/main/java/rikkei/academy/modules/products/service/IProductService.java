@@ -2,20 +2,22 @@ package rikkei.academy.modules.products.service;
 
 
 import rikkei.academy.modules.products.Product;
-import rikkei.academy.modules.products.dto.request.ProductRequest;
+import rikkei.academy.modules.products.dto.request.ProductRequestAdd;
+import rikkei.academy.modules.products.dto.request.ProductRequestUpdate;
 import rikkei.academy.modules.products.dto.response.ProductResponse;
 import rikkei.academy.generic.IGeneric;
 
 import java.util.List;
 
 public interface IProductService extends IGeneric<Product,Integer> {
-    ProductRequest updatePro(Product p);
+    ProductRequestUpdate updatePro(Product p);
     List<Product> findAllProduct();
     List<Product> findByPagination(Integer page ,Integer limit);
-    void save(ProductRequest request);
+    void save(ProductRequestAdd request);
     List<ProductResponse> searchByName(String keyword);
     long getTotalsElement();
     boolean existByName(String name);
-    Product updateProduct(ProductRequest pro,Product product);
+    Product updateProduct(ProductRequestUpdate pro, Product product);
     public void update(Product product);
+    void deleteImage(Integer id);
 }

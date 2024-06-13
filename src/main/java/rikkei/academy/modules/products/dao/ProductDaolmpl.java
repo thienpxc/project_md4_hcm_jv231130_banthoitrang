@@ -29,6 +29,16 @@ public class ProductDaolmpl implements IProductDao{
         Session session = sessionFactory.getCurrentSession();
         session.update(product);
     }
+
+    @Override
+    public void deleteImage(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        ProductImages productImages = session.get(ProductImages.class,id);
+        if (productImages != null){
+            session.delete(productImages);
+        }
+    }
+
     @Override
     public void save(Product product) {
         Session session = sessionFactory.getCurrentSession();

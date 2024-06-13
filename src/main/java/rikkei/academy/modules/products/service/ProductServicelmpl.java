@@ -3,13 +3,17 @@ package rikkei.academy.modules.products.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import org.springframework.web.multipart.MultipartFile;
 import rikkei.academy.modules.category.service.ICategoryService;
 import rikkei.academy.modules.products.ProductImages;
-import rikkei.academy.modules.products.dto.request.ProductRequest;
+import rikkei.academy.modules.products.dto.request.ProductRequestAdd;
+import rikkei.academy.modules.products.dto.request.ProductRequestUpdate;
+import rikkei.academy.modules.products.dto.response.OldImage;
 import rikkei.academy.modules.products.dto.response.ProductResponse;
 import rikkei.academy.modules.products.Product;
 import rikkei.academy.modules.products.dao.ProductDaolmpl;
 import rikkei.academy.ultil.UploadFileService;
+
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,7 +29,7 @@ public class ProductServicelmpl implements IProductService {
     private ICategoryService categoryService;
     @Autowired
     private UploadFileService uploadFileService;
-
+    private final String uploadFolderProduct = "C:\\Users\\LACKY\\Desktop\\project\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\product\\";
     @Override
     public List<Product> findAllProduct() {
         return productDaolmpl.findAll();
@@ -38,20 +42,20 @@ public class ProductServicelmpl implements IProductService {
 
 
     @Override
-    public ProductRequest updatePro(Product p) {
-        List<String> oldImageUrls = p.getImages().stream().map(ProductImages::getUrl).collect(Collectors.toList());
-        return new ProductRequest(p.getId(), p.getName(), p.getCategoryId().getId(), p.getDescription(), p.getPrice(), p.getStock(), p.getManufacturer(), oldImageUrls, null, p.isStatus());
+    public ProductRequestUpdate updatePro(Product p) {
+        List<OldImage> oldImage =  p.getImages().stream().map(i -> new OldImage(i.getId(),i.getUrl())).collect(Collectors.toList());
+        return new ProductRequestUpdate(p.getId(), p.getName(), p.getCategoryId().getId(), p.getDescription(), p.getPrice(), p.getStock(), p.getManufacturer(), oldImage, null, p.isStatus());
     }
 
     @Override
-    public Product updateProduct(ProductRequest pro, Product product) {
+    public Product updateProduct(ProductRequestUpdate pro, Product product) {
         List<String> urls;
         if (pro.getImages().get(0).getSize() == 0) {
             // không thay đổi ảnh
-            urls = pro.getOldImageUrls();
+            urls = pro.getOldImage().stream().map(OldImage::getUrl).collect(Collectors.toList());
         } else {
             // upload mới
-            urls = uploadFileService.uploadFile(pro.getImages()).stream().map(ProductImages::getUrl).collect(Collectors.toList());
+            urls = uploadFileService.uploadFile(pro.getImages(),uploadFolderProduct).stream().map(ProductImages::getUrl).collect(Collectors.toList());
         }
         List<ProductImages> productImagesList = new ArrayList<>();
         for (String url : urls) {
@@ -63,22 +67,18 @@ public class ProductServicelmpl implements IProductService {
         Date date = new Date();
         return new Product(pro.getId(), pro.getName(), categoryService.findCategoryById(pro.getCatalogId()), pro.getDes(), pro.getPrice(), pro.getStock(), productImagesList, null, date, pro.isStatus(), pro.getManufacturer());
     }
-@Override
-public void update(Product product) {
-        productDaolmpl.update(product);
-}
+
     @Override
-    public void save(ProductRequest request) {
+    public void update(Product product) {
+        productDaolmpl.update(product);
+    }
+
+    @Override
+    public void save(ProductRequestAdd request) {
         // chuyển đổi
         Product product = new Product();
-        if (request.getId() != null) {
-            // neu laf chuc nang cap nhap
-            product = productDaolmpl.findById(request.getId());
-            product.setUpdatedAt(new Date());
-        } else {
-            product.setCreatedAt(new Date());
-            product.setStatus(true);
-        }
+        product.setCreatedAt(new Date());
+        product.setStatus(true);
         product.setName(request.getName());
         product.setDescription(request.getDes());
         product.setPrice(request.getPrice());
@@ -87,7 +87,7 @@ public void update(Product product) {
         product.setManufacturer(request.getManufacturer());
         // upload mới
         List<ProductImages> productImagesList = new ArrayList<>();
-        List<String> urls = uploadFileService.uploadFile(request.getImages()).stream().map(ProductImages::getUrl).collect(Collectors.toList());
+        List<String> urls = uploadFileService.uploadFile(request.getImages(), uploadFolderProduct).stream().map(ProductImages::getUrl).collect(Collectors.toList());
         for (String url : urls) {
             ProductImages productImages = new ProductImages();
             productImages.setUrl(url);
@@ -122,5 +122,10 @@ public void update(Product product) {
     @Override
     public boolean existByName(String name) {
         return productDaolmpl.existByName(name);
+    }
+
+    @Override
+    public void deleteImage(Integer id) {
+        productDaolmpl.deleteImage(id);
     }
 }
