@@ -30,6 +30,7 @@ public class ProductServicelmpl implements IProductService {
     @Autowired
     private UploadFileService uploadFileService;
     private final String uploadFolderProduct = "C:\\Users\\LACKY\\Desktop\\project\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\product\\";
+
     @Override
     public List<Product> findAllProduct() {
         return productDaolmpl.findAll();
@@ -38,6 +39,7 @@ public class ProductServicelmpl implements IProductService {
     @Override
     public Product findById(Integer id) {
         return productDaolmpl.findById(id);
+
     }
 
 
@@ -45,6 +47,7 @@ public class ProductServicelmpl implements IProductService {
     public ProductRequestUpdate updatePro(Product p) {
         List<OldImage> oldImage =  p.getImages().stream().map(i -> new OldImage(i.getId(),i.getUrl())).collect(Collectors.toList());
         return new ProductRequestUpdate(p.getId(), p.getName(), p.getCategoryId().getId(), p.getDescription(), p.getPrice(), p.getStock(), p.getManufacturer(), oldImage, null, p.isStatus());
+
     }
 
     @Override
@@ -125,7 +128,13 @@ public class ProductServicelmpl implements IProductService {
     }
 
     @Override
+
     public void deleteImage(Integer id) {
         productDaolmpl.deleteImage(id);
+    }
+        @Override
+    public List<Product> findByCategory(Integer categoryId) {
+        return productDaolmpl.findByCategoryId(categoryId);
+
     }
 }

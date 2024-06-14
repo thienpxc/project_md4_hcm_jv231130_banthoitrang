@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import rikkei.academy.modules.category.Category;
 import rikkei.academy.modules.category.service.ICategoryService;
 import rikkei.academy.modules.products.Product;
+
 import rikkei.academy.modules.products.dto.request.ProductRequestAdd;
 import rikkei.academy.modules.products.dto.request.ProductRequestUpdate;
+
 import rikkei.academy.modules.products.service.IProductService;
 
 import javax.validation.Valid;
@@ -61,12 +63,14 @@ public class ProductController {
     }
 
     @GetMapping("product/edit")
+
     public String editProduct( @RequestParam ("id") Integer id, Model model){
         Product product = productService.findById(id);
         List<Category> categories = categoryService.findAllCategory();
         ProductRequestUpdate productRequestUpdate = productService.updatePro(product);
         model.addAttribute("categories",categories);
         model.addAttribute("productEdit", productRequestUpdate);
+
         return "admin/product/edit";
     }
 

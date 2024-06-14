@@ -5,6 +5,6 @@ import rikkei.academy.modules.customer.dto.loginDto.RegisterForm;
 
 public interface IUserService {
     Customer getUserByUserName(String userName);
-    void save(RegisterForm registerForm);
+    void save(Customer registerForm);
     Customer converFormRegisterToUser(RegisterForm form);
 }

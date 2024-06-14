@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
+
 @Setter
 @Getter
 @Builder
@@ -33,6 +33,10 @@ public class Customer {
     @OneToMany(mappedBy = "customer",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<Orders> orders;
     private Boolean gender;
+
+    public Customer() {
+        this.createdAt = new Date(); // Khởi tạo ngày tạo là ngày hiện tại
+    }
 
 
 
