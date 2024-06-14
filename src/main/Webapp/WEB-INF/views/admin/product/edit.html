@@ -9,12 +9,13 @@
 </head>
 <body>
 <h1>Update</h1>
-<form action="/admin/product/edit" method="post" enctype="multipart/form-data" th:object="${productEdit}">
+<form action="/admin/product/edit" enctype="multipart/form-data" th:object="${productEdit}" id="formId" method="post">
     <div class="modal-content p-4">
         <div class="modal-header">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            product
         </div>
-        <div class="modal-body" >
+        <div class="modal-body">
             <input type="hidden" th:field="*{id}">
             <div class="mb-3">
                 <label class="form-label">Product Name</label>
@@ -23,24 +24,23 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">Category</label>
-                <label>
-                    <select class="form-select" th:field="*{catalogId}">
-                        <option value="">Select Category</option>
-                        <option th:if="${!categories.isEmpty()}" th:each="category : ${categories}"
-                                th:value="${category.id}" th:text="${category.name}"
-                                th:selected="${category.name}"></option>
-                    </select>
-                    <p class="text-danger" th:if="${#fields.hasErrors('catalogId')}" th:errors="*{catalogId}"></p>
-                </label>
+                <select class="form-select" th:field="*{catalogId}">
+                    <option value="">Select Category</option>
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}" th:text="${category.name}"
+                            th:selected="${category.id == productEdit.catalogId}"></option>
+                </select>
+                <p class="text-danger" th:if="${#fields.hasErrors('catalogId')}" th:errors="*{catalogId}"></p>
             </div>
             <div class="mb-3">
                 <label class="form-label">Product old images</label>
                 <div style="display: flex; overflow-x: auto;">
                     <div th:each="image : *{oldImage}">
                         <div class="image-container">
-                            <input type="hidden" name="imageId"  th:value="${image.id}">
-                            <img th:src="${image.url}" style="width: 100px; height: 100px; object-fit: cover; margin-right: 10px;">
-                            <button class="delete-button">&#x2718;</button>
+                            <input type="hidden" name="imageId" th:value="${image.id}">
+                            <img th:src="${image.url}"
+                                 style="width: 100px; height: 100px; object-fit: cover; margin-right: 10px;">
+                            <button class="delete-button" type="button" onclick="deleteImage(this)">&#x2718;</button>
                         </div>
                     </div>
                 </div>
@@ -48,11 +48,10 @@
             <div class="mb-3">
                 <label class="form-label">Product Image</label>
                 <input type="file" class="form-control" th:field="*{images}" multiple>
-                <!--                <p class="text-danger" th:if="${#fields.hasErrors('image')}" th:errors="*{imageUrl}"></p>-->
             </div>
             <div class="mb-3">
                 <label class="form-label">Descriptions</label>
-                <input class="form-control" rows="3" name="des" th:field="*{des}">
+                <textarea class="form-control" rows="3" name="des" th:field="*{des}"></textarea>
                 <p class="text-danger" th:if="${#fields.hasErrors('des')}" th:errors="*{des}"></p>
             </div>
             <div class="mb-3">
@@ -77,36 +76,60 @@
                     <option value="false" th:selected="*{status == false}">Hết Bán</option>
                 </select>
             </div>
-            <div class="modal-footer">
-                <a href="/admin/product">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </a>
-                <button type="submit" class="btn btn-primary">Update</button>
-            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="/admin/product">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </a>
+            <button type="button" class="btn btn-primary" onclick="submitForm(event, '/admin/product/edit', 'POST', document.getElementById('formId'))">Update</button>
         </div>
     </div>
 </form>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $('.delete-button').click(function () {
-            let imageId = $(this).prev().attr('data-id');
-            let imageContainer = $(this).parent();
-            $.ajax({
-                url: '/admin/product/deleteImage',
-                type: 'POST',
-                data: {
-                    imageId: imageId
-                },
-                success: function (response) {
-                    if (response === 'success') {
-                        imageContainer.remove();
-                    }
-                }
-            });
-        });
-    });
-</script>
+    function submitForm(event, action, method, form) {
+        event.preventDefault(); // Ngăn chặn gửi form mặc định
 
+        const formData = new FormData(form);
+        fetch(action, {
+            method: method,
+            body: formData
+        })
+            .then(response => {
+                // Xử lý kết quả trả về
+                if (response.status === 200) {
+                    alert('Cập nhật sản phẩm thành công');
+                    window.location.href = '/admin/product';
+                } else if (response.status === 400) {
+                    alert('Cập nhật sản phẩm thất bại');
+                }
+            })
+            .catch(error => {
+                // Xử lý lỗi
+                console.error(error);
+            });
+    }
+
+    function deleteImage(button) {
+        const imageContainer = button.parentElement;
+        const imageId = imageContainer.querySelector('input[name="imageId"]').value;
+
+        fetch('/admin/product/deleteImage/'+imageId, {
+            method: 'GET',
+        })
+            .then(response => response.text())
+            .then(data => {
+                // Xử lý phản hồi từ server
+                if (data === 'Xóa ảnh thành công') {
+                    imageContainer.remove();
+                    alert('Xóa ảnh thành công')
+                } else {
+                    console.error('Failed to delete image:', data);
+                }
+            })
+            .catch(error => {
+                console.error('Có lỗi xảy ra:', error);
+            });
+    }
+</script>
 </body>
 </html>

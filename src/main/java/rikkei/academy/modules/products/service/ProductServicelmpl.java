@@ -29,7 +29,7 @@ public class ProductServicelmpl implements IProductService {
     private ICategoryService categoryService;
     @Autowired
     private UploadFileService uploadFileService;
-    private final String uploadFolderProduct = "C:\\Users\\LACKY\\Desktop\\project\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\product\\";
+    private final String uploadFolderProduct = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
 
     @Override
     public List<Product> findAllProduct() {
@@ -47,16 +47,17 @@ public class ProductServicelmpl implements IProductService {
     public ProductRequestUpdate updatePro(Product p) {
         List<OldImage> oldImage =  p.getImages().stream().map(i -> new OldImage(i.getId(),i.getUrl())).collect(Collectors.toList());
         return new ProductRequestUpdate(p.getId(), p.getName(), p.getCategoryId().getId(), p.getDescription(), p.getPrice(), p.getStock(), p.getManufacturer(), oldImage, null, p.isStatus());
-
     }
 
     @Override
     public Product updateProduct(ProductRequestUpdate pro, Product product) {
-        List<String> urls;
+        List<String> urls = null;
         if (pro.getImages().get(0).getSize() == 0) {
+            System.out.println("không thay đổi ảnh");
             // không thay đổi ảnh
-            urls = pro.getOldImage().stream().map(OldImage::getUrl).collect(Collectors.toList());
+            urls = product.getImages().stream().map(ProductImages::getUrl).collect(Collectors.toList());
         } else {
+            System.out.println("thay đổi ảnh");
             // upload mới
             urls = uploadFileService.uploadFile(pro.getImages(),uploadFolderProduct).stream().map(ProductImages::getUrl).collect(Collectors.toList());
         }
@@ -130,11 +131,19 @@ public class ProductServicelmpl implements IProductService {
     @Override
 
     public void deleteImage(Integer id) {
+        ProductImages image = productDaolmpl.findImageById(id);
+        Product product = image.getProduct();
+        product.getImages().remove(image);
         productDaolmpl.deleteImage(id);
     }
         @Override
     public List<Product> findByCategory(Integer categoryId) {
         return productDaolmpl.findByCategoryId(categoryId);
 
+    }
+
+    @Override
+    public ProductImages findImageById(Integer id) {
+        return productDaolmpl.findImageById(id);
     }
 }

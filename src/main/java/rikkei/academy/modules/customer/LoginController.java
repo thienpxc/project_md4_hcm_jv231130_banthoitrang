@@ -31,7 +31,6 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-
     public String showRegistrationForm(Model model) {
         RegisterForm registerForm = new RegisterForm();
         LoginForm loginForm = new LoginForm();
@@ -66,8 +65,6 @@ public class LoginController {
         customer.setAddress(form.getAddress());
         customer.setAvatar(form.getAvatar());
         customer.setGender(form.getGender());
-
-
         userService.save(customer);
         return "redirect:/login";
     }

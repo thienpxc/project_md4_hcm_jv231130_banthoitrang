@@ -2,6 +2,7 @@ package rikkei.academy.modules.products.service;
 
 
 import rikkei.academy.modules.products.Product;
+import rikkei.academy.modules.products.ProductImages;
 import rikkei.academy.modules.products.dto.request.ProductRequestAdd;
 import rikkei.academy.modules.products.dto.request.ProductRequestUpdate;
 import rikkei.academy.modules.products.dto.response.ProductResponse;
@@ -24,5 +25,6 @@ public interface IProductService extends IGeneric<Product,Integer> {
     public void update(Product product);
     void deleteImage(Integer id);
     List<Product> findByCategory(Integer categoryId);
+    ProductImages findImageById(Integer id);
 
 }

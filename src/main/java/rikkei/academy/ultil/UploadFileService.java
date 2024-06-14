@@ -21,7 +21,7 @@ public class UploadFileService {
 
     public List<ProductImages> uploadFile(List<MultipartFile> files,String uploadFolder) {
         if(files != null && files.size() != 0) {
-            // Lấy đường dẫn thư mục uploads
+            // Lấy đường dẫ,n thư mục uploads
             String uploadPath = context.getRealPath("/uploads");
             // tạo thư mục nếu chưa tồn tại
             File uploadDir = new File(uploadPath);
