@@ -23,12 +23,6 @@ public class LoginController {
     private IUserService userService;
 
 
-    @GetMapping("/logout")
-    public String logout(HttpSession session) {
-        session.removeAttribute("loginUser");
-        session.removeAttribute("login");
-        return "redirect:/customer";
-    }
 
     @GetMapping("/login")
     public String showRegistrationForm(Model model) {

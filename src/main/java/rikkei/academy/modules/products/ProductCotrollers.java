@@ -24,6 +24,7 @@ public class ProductCotrollers {
 
         Product product = productService.findById(id);
         if (product != null) {
+
             model.addAttribute("product", product);
         }
         // Kiểm tra xem có đủ 10 sản phẩm không
@@ -36,11 +37,20 @@ public class ProductCotrollers {
 
         return "/customer/shop/detail";
     }
+
     @GetMapping("/productadd/{id}")
     public String showProducts(Model model) {
         List<Product> products = productService.findAllProduct();
         model.addAttribute("products", products);
         return "/customer/shop/cart";
     }
+
+//    @GetMapping("/productadd/{id}")
+//    public String showProducts(Model model) {
+//        List<Product> products = productService.findAllProduct();
+//        model.addAttribute("products", products);
+//        return "/customer/shop/cart";
+//    }
+
 
 }
