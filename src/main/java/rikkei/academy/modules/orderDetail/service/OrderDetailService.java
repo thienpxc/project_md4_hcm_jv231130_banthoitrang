@@ -18,7 +18,7 @@ public class OrderDetailService {
         return orderDetailDao.saveOrderDetail(orderDetail);
     }
     public List<OrderDetail> findAllActiveByOrderId(int orderId) {
-        return orderDetailDao.findAllActiveByOrderId(orderId);
+        return orderDetailDao.findAllActiveByCustomerId(orderId);
     }
     public OrderDetail findByOrderIdAndProductId(Orders order, Product product) {
         return orderDetailDao.findByOrderIdAndProductId(order, product);

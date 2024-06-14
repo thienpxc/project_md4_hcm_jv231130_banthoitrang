@@ -45,12 +45,7 @@ public class ProductCotrollers {
         return "/customer/shop/cart";
     }
 
-//    @GetMapping("/productadd/{id}")
-//    public String showProducts(Model model) {
-//        List<Product> products = productService.findAllProduct();
-//        model.addAttribute("products", products);
-//        return "/customer/shop/cart";
-//    }
+
 
 
 }

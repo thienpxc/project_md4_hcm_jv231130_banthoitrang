@@ -27,7 +27,7 @@ public class CheckoutController {
 
         // Tạo một đối tượng Orders mới
         Orders order = new Orders();
-        // Đặt các thuộc tính cho order tại đây...
+
 
         // Lưu order và orderDetails
         orderService.saveOrderAndDetails(order, cart);

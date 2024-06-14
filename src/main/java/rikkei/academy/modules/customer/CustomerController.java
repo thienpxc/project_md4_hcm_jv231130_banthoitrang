@@ -6,9 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import rikkei.academy.modules.category.service.ICategoryService;
+import rikkei.academy.modules.order.Orders;
+import rikkei.academy.modules.orderDetail.OrderDetail;
+import rikkei.academy.modules.orderDetail.service.OrderDetailService;
 import rikkei.academy.modules.products.service.IProductService;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = {"/customer", ""})
@@ -17,6 +21,8 @@ public class CustomerController {
     private ICategoryService categoryService;
     @Autowired
     private IProductService productService;
+    @Autowired
+    private OrderDetailService orderDetailService;
     @RequestMapping(value = {"/", ""})
     public String index(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("loginUser");
@@ -55,7 +61,17 @@ public class CustomerController {
         return "redirect:/";
     }
     @GetMapping("/cart")
-    public String cart() {
+    public String cart(HttpSession session, Model model) {
+        // Lấy đối tượng Customer từ phiên
+        Customer customer = (Customer) session.getAttribute("loginUser");
+
+        // Nếu Customer không tồn tại, chuyển hướng người dùng về trang đăng nhập hoặc trang khác tùy thuộc vào yêu cầu của bạn
+        if (customer == null) {
+            return "redirect:/login";
+        }
+        // Tìm đối tượng Orders tương ứng với Customer này
+       model.addAttribute("orderDetail", orderDetailService.findAllActiveByOrderId(customer.getCustomerId()));
+
         return "customer/shop/cart";
     }
     @GetMapping("/checkout")
