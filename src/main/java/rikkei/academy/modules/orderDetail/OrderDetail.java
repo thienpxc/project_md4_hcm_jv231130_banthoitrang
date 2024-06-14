@@ -25,4 +25,17 @@ public class OrderDetail {
     private Boolean status = true;
     private double price;
     private int quantity;
+
+
+    @Override
+    public String toString() {
+        return "OrderDetail{" +
+                "orderItemId=" + orderItemId +
+                ", orderId=" + orderId +
+                ", productId=" + productId +
+                ", status=" + status +
+                ", price=" + price +
+                ", quantity=" + quantity +
+                '}';
+    }
 }

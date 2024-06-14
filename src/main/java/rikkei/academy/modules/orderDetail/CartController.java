@@ -34,12 +34,11 @@ public class CartController {
     @PostMapping("/productadd/{id}")
     public String addToCart(@PathVariable("id") int productId, @RequestParam("quantity") int quantity, HttpSession session, OrderDetail orderDetail,Model model) {
         // Lấy đối tượng Customer từ phiên
-
         Customer customer = (Customer) session.getAttribute("loginUser");
       List<OrderDetail> orderDetails = orderDetailService.findAllActiveByOrderId(customer.getCustomerId());
        System.out.println("code đay"+orderDetails.size());
-
-        // Tìm đối tượng Orders tương ứng với Customer này
+        model.addAttribute("orderDetail", orderDetailService.findAllActiveByOrderId(customer.getCustomerId()));
+      // Tìm đối tượng Orders tương ứng với Customer này
         Orders order = orderService.findOrderByCustomer(customer);
 
         // Lấy thông tin sản phẩm từ ID sản phẩm
@@ -62,7 +61,7 @@ public class CartController {
             orderDetail.setQuantity(quantity);
             orderDetailService.save(orderDetail);
         }
-//        model.addAttribute("orderDetails", orderDetails);
+
         // Chuyển hướng người dùng về trang giỏ hàng hoặc một trang khác tùy thuộc vào yêu cầu của bạn
         return "redirect:/cart";
     }
