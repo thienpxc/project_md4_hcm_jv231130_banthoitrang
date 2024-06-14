@@ -25,7 +25,7 @@ public class Product {
     private String description;
     private double price;
     private int stock;
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductImages> images;
     private Date createdAt;
     private Date updatedAt;

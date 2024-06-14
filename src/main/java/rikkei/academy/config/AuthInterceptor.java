@@ -11,7 +11,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
     Customer user = (Customer) request.getSession().getAttribute("loginUser");
     if (user == null) {
-        response.sendRedirect("/auth");
+        response.sendRedirect("/login");
         return false;
     }
     if (user != null && user.getRole()) {

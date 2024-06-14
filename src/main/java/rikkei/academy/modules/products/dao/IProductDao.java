@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface IProductDao extends IGenericDao<Product,Integer> {
     void saveProductImages(ProductImages productImages);
+    ProductImages findImageById(Integer id);
     List<Product> findByPagination(Integer page ,Integer size);
     List<Product> searchByName(String keyword);
     long getTotalsElement();

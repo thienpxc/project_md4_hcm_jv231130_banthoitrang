@@ -66,6 +66,5 @@ public class CategoryDaolmpl implements ICategoryDao{
         Session session = sessionFactory.getCurrentSession();
         return !session.createQuery("from Category where name like :name")
                 .setParameter("name",name).list().isEmpty();
-
     }
 }

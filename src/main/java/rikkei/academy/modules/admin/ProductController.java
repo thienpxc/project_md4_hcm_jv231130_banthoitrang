@@ -1,6 +1,9 @@
 package rikkei.academy.modules.admin;
 
+import org.codehaus.groovy.transform.SourceURIASTTransformation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +19,9 @@ import rikkei.academy.modules.products.dto.request.ProductRequestUpdate;
 import rikkei.academy.modules.products.service.IProductService;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/admin")
@@ -36,6 +41,7 @@ public class ProductController {
         long du = totalElements%limit;
         long totalPages = du==0?nguyen:nguyen+1;
         model.addAttribute("products",productService.findByPagination(page,limit));
+        System.out.println("product0" + productService.findByPagination(page,limit).get(0).toString());
         model.addAttribute("totalPages",totalPages);
         model.addAttribute("page",page);
         model.addAttribute("limit",limit);
@@ -51,8 +57,8 @@ public class ProductController {
     }
     @PostMapping("product/add")
     public String addProduct(@Valid @ModelAttribute("product") ProductRequestAdd request, BindingResult result, Model model){
+        System.out.println("da vao add 1");
         List<Category> categories = categoryService.findAllCategory();
-        System.out.println("request = " + request.toString());
        if (result.hasErrors()) {
            model.addAttribute("categories",categories);
            model.addAttribute("product",request);
@@ -74,32 +80,37 @@ public class ProductController {
         return "admin/product/edit";
     }
 
-    @PostMapping("product/edit")
-    public String doEdit(@Valid @ModelAttribute("productEdit") ProductRequestUpdate request, BindingResult result, Model model){
-        System.out.println("request" + request.toString());
+    @PostMapping(value = "product/edit", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> doEdit(@Valid @ModelAttribute("productEdit") ProductRequestUpdate request, BindingResult result, Model model) {
+        Map<String, Object> response = new HashMap<>();
+        System.out.println("da vao update 1");
         Product product = productService.findById(request.getId());
         List<Category> categories = categoryService.findAllCategory();
+
         if (result.hasErrors()) {
-            model.addAttribute("categories",categories);
-            model.addAttribute("productEdit",request);
-            return "redirect:/admin/product/edit?id="+request.getId(); // chuyển hướng về trang edit
+            response.put("errors", result.getAllErrors());
+            response.put("categories", categories);
+            response.put("productEdit", request);
+            return ResponseEntity.badRequest().body(response);
         }
-        productService.update(productService.updateProduct(request,product));
-        return "redirect:/admin/product";
+
+        if (product == null) {
+            response.put("message", "Không tìm thấy sản phẩm");
+            return ResponseEntity.status(404).body(response);
+        }
+        productService.update(productService.updateProduct(request, product));
+        response.put("message", "Cập nhật sản phẩm thành công");
+        return ResponseEntity.status(200).body(response);
     }
-    @GetMapping("product/delete")
-    public String deleteProduct(@RequestParam("id") Integer id){
-        productService.delete(id);
-        return "redirect:/admin/product";
+    @GetMapping("product/deleteImage/{id}")
+    public ResponseEntity<String> deleteImage(@PathVariable("id") Integer imageId) {
+        System.out.println("imageId: " + imageId);
+        try {
+            productService.deleteImage(imageId);
+            return ResponseEntity.ok("Xóa ảnh thành công");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Có lỗi xảy ra: " + e.getMessage());
+        }
     }
-    @PostMapping("/product/deleteImage")
-    public ResponseEntity<String> deleteImage(@RequestParam("imageId") Integer imageId) {
-        // Xử lý xóa ảnh với imageId
-        productService.deleteImage(imageId);
-
-        return ResponseEntity.ok("Xóa ảnh thành công");
-    }
-
-
-
 }

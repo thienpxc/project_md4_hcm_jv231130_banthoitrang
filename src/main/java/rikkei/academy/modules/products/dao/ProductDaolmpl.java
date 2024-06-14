@@ -37,6 +37,7 @@ public class ProductDaolmpl implements IProductDao{
         if (productImages != null){
             session.delete(productImages);
         }
+
     }
 
     @Override
@@ -59,6 +60,11 @@ public class ProductDaolmpl implements IProductDao{
     public void saveProductImages(ProductImages productImages) {
         Session session = sessionFactory.getCurrentSession();
         session.save(productImages);
+    }
+
+    @Override
+    public ProductImages findImageById(Integer id) {
+        return sessionFactory.getCurrentSession().get(ProductImages.class,id);
     }
 
     @Override
