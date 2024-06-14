@@ -106,7 +106,6 @@ public class ProductDaolmpl implements IProductDao{
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Product p where p.categoryId.id = :id", Product.class)
                 .setParameter("id", categoryId)
-
                 .list();
     }
 }
