@@ -30,7 +30,9 @@ public class ProductServicelmpl implements IProductService {
     @Autowired
     private UploadFileService uploadFileService;
 
-    private final String uploadFolderProduct = "C:\\Users\\dokie.DOKIEU\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
+    private final String userName = System.getProperty("user.name");
+
+    private final String uploadFolderProduct = "C:\\Users\\" + userName + "\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
 
 
     @Override
@@ -47,7 +49,8 @@ public class ProductServicelmpl implements IProductService {
 
     @Override
     public ProductRequestUpdate updatePro(Product p) {
-        List<OldImage> oldImage =  p.getImages().stream().map(i -> new OldImage(i.getId(),i.getUrl())).collect(Collectors.toList());
+
+        List<OldImage> oldImage = p.getImages().stream().map(i -> new OldImage(i.getId(), i.getUrl())).collect(Collectors.toList());
         return new ProductRequestUpdate(p.getId(), p.getName(), p.getCategoryId().getId(), p.getDescription(), p.getPrice(), p.getStock(), p.getManufacturer(), oldImage, null, p.isStatus());
     }
 
@@ -61,7 +64,7 @@ public class ProductServicelmpl implements IProductService {
         } else {
             System.out.println("thay đổi ảnh");
             // upload mới
-            urls = uploadFileService.uploadFile(pro.getImages(),uploadFolderProduct).stream().map(ProductImages::getUrl).collect(Collectors.toList());
+            urls = uploadFileService.uploadFile(pro.getImages(), uploadFolderProduct).stream().map(ProductImages::getUrl).collect(Collectors.toList());
         }
         List<ProductImages> productImagesList = new ArrayList<>();
         for (String url : urls) {
@@ -138,7 +141,8 @@ public class ProductServicelmpl implements IProductService {
         product.getImages().remove(image);
         productDaolmpl.deleteImage(id);
     }
-        @Override
+
+    @Override
     public List<Product> findByCategory(Integer categoryId) {
         return productDaolmpl.findByCategoryId(categoryId);
 

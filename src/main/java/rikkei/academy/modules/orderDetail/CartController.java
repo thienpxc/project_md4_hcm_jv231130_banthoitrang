@@ -36,7 +36,6 @@ public class CartController {
         // Lấy đối tượng Customer từ phiên
 
         Customer customer = (Customer) session.getAttribute("loginUser");
-        System.out.println(customer+"helloofddddddddddddddddddddddddddfff");
       List<OrderDetail> orderDetails = orderDetailService.findAllActiveByOrderId(customer.getCustomerId());
        System.out.println("code đay"+orderDetails.size());
 
