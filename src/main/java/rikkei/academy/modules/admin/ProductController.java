@@ -1,6 +1,7 @@
 package rikkei.academy.modules.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -8,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import rikkei.academy.modules.category.Category;
 import rikkei.academy.modules.category.service.ICategoryService;
 import rikkei.academy.modules.products.Product;
-import rikkei.academy.modules.products.dto.request.ProductRequest;
-import rikkei.academy.modules.products.dto.response.ProductResponse;
+import rikkei.academy.modules.products.dto.request.ProductRequestAdd;
+import rikkei.academy.modules.products.dto.request.ProductRequestUpdate;
 import rikkei.academy.modules.products.service.IProductService;
 
 import javax.validation.Valid;
@@ -36,11 +37,18 @@ public class ProductController {
         model.addAttribute("totalPages",totalPages);
         model.addAttribute("page",page);
         model.addAttribute("limit",limit);
-        model.addAttribute("product",new ProductRequest());
+        model.addAttribute("product",new ProductRequestAdd());
         return "admin/product/product";
     }
+    @GetMapping("product/add")
+    public String doAdd(Model model){
+        List<Category> categories = categoryService.findAllCategory();
+        model.addAttribute("categories",categories);
+        model.addAttribute("product",new ProductRequestUpdate());
+        return "/admin/product/add";
+    }
     @PostMapping("product/add")
-    public String addProduct(@Valid @ModelAttribute("product") ProductRequest request, BindingResult result,Model model){
+    public String addProduct(@Valid @ModelAttribute("product") ProductRequestAdd request, BindingResult result, Model model){
         List<Category> categories = categoryService.findAllCategory();
         System.out.println("request = " + request.toString());
        if (result.hasErrors()) {
@@ -51,25 +59,19 @@ public class ProductController {
         productService.save(request);
         return "redirect:/admin/product";
     }
-    @GetMapping("product/add")
-    public String doAdd(Model model){
-        List<Category> categories = categoryService.findAllCategory();
-        model.addAttribute("categories",categories);
-        model.addAttribute("product",new ProductRequest());
-        return "/admin/product/add";
-    }
+
     @GetMapping("product/edit")
     public String editProduct( @RequestParam ("id") Integer id, Model model){
         Product product = productService.findById(id);
         List<Category> categories = categoryService.findAllCategory();
-        ProductRequest productRequest = productService.updatePro(product);
+        ProductRequestUpdate productRequestUpdate = productService.updatePro(product);
         model.addAttribute("categories",categories);
-        model.addAttribute("productEdit",productRequest);
+        model.addAttribute("productEdit", productRequestUpdate);
         return "admin/product/edit";
     }
 
     @PostMapping("product/edit")
-    public String doEdit(@Valid @ModelAttribute("productEdit") ProductRequest request, BindingResult result, Model model){
+    public String doEdit(@Valid @ModelAttribute("productEdit") ProductRequestUpdate request, BindingResult result, Model model){
         System.out.println("request" + request.toString());
         Product product = productService.findById(request.getId());
         List<Category> categories = categoryService.findAllCategory();
@@ -86,7 +88,13 @@ public class ProductController {
         productService.delete(id);
         return "redirect:/admin/product";
     }
+    @PostMapping("/product/deleteImage")
+    public ResponseEntity<String> deleteImage(@RequestParam("imageId") Integer imageId) {
+        // Xử lý xóa ảnh với imageId
+        productService.deleteImage(imageId);
 
+        return ResponseEntity.ok("Xóa ảnh thành công");
+    }
 
 
 

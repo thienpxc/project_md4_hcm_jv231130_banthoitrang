@@ -72,3 +72,31 @@ select {
     font-size: 0.9rem;
     padding: 0.5rem;
 }
+
+.image-container {
+    position: relative;
+}
+
+.delete-button {
+    position: absolute;
+    top: 10%;
+    right: 10%;
+    transform: translate(-50%, -50%);
+    background-color: #f00;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    cursor: pointer;
+    display: none;
+}
+
+.image-container:hover .delete-button {
+    display: block;
+}
+
+
+

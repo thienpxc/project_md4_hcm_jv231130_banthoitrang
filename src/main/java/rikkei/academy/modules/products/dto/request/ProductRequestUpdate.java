@@ -5,9 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
-import rikkei.academy.modules.category.Category;
+import rikkei.academy.modules.products.dto.response.OldImage;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
-public class ProductRequest {
+public class ProductRequestUpdate {
     private Integer id;
     @NotBlank(message = "Tên không được để trống")
     private String name;
@@ -30,10 +29,9 @@ public class ProductRequest {
     private int stock;
     @NotNull
     private String manufacturer;
-    private List<String> oldImageUrls;
+    private List<OldImage> oldImage;
     private List<MultipartFile> images;
     private boolean status = true;
-
     @Override
     public String toString() {
         return "ProductRequest{" +
