@@ -12,7 +12,11 @@ public interface IProductDao extends IGenericDao<Product,Integer> {
     List<Product> searchByName(String keyword);
     long getTotalsElement();
     boolean existByName(String name);
+
     public void update(Product product);
 
     void deleteImage(Integer id);
+
+    List<Product> findByCategoryId(Integer categoryId);
+
 }

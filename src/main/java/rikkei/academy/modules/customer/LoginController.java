@@ -22,36 +22,54 @@ public class LoginController {
     @Autowired
     private IUserService userService;
 
+
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("loginUser");
         session.removeAttribute("login");
         return "redirect:/customer";
     }
-    @GetMapping("/auth")
+
+    @GetMapping("/login")
+
     public String showRegistrationForm(Model model) {
         RegisterForm registerForm = new RegisterForm();
         LoginForm loginForm = new LoginForm();
         model.addAttribute("registerForm", registerForm);
         model.addAttribute("loginForm", loginForm);
-        return "customer/shop/login/index";
+        return "customer/shop/login/login";
+    }
+    @GetMapping("/register")
+    public String register(Model model) {
+        RegisterForm registerForm = new RegisterForm();
+        model.addAttribute("registerForm", registerForm);
+        return "customer/shop/login/create-account";
     }
     @PostMapping("/doLogin")
     public String doLogin(@ModelAttribute("loginForm") LoginForm form, HttpSession session) {
         Customer customer = userService.getUserByUserName(form.getUsername());
-        System.out.println("day ne" +customer.toString());
         session.setAttribute("loginUser", customer);
         session.setAttribute("login", "login");
         if(customer.getRole()){
             return "redirect:/admin"; // admin page
         }
-        return "redirect:/customer"; // customer page
+        return "redirect:/"; // customer page
     }
 
     @PostMapping("/doRegister")
     public String doRegister(@ModelAttribute("registerForm") RegisterForm form) {
-        userService.save(form);
-        return "redirect:/auth";
+        Customer customer = new Customer();
+        customer.setCustomerName(form.getUsername());
+        customer.setPassword(form.getPassword());
+        customer.setEmail(form.getEmail());
+        customer.setPhoneNumber(form.getPhone());
+        customer.setAddress(form.getAddress());
+        customer.setAvatar(form.getAvatar());
+        customer.setGender(form.getGender());
+
+
+        userService.save(customer);
+        return "redirect:/login";
     }
 
 }

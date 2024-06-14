@@ -22,6 +22,7 @@ public class OrderDetail {
     @ManyToOne
     @JoinColumn(name = "productId")
     private Product productId;
+    private Boolean status = true;
     private double price;
     private int quantity;
 }

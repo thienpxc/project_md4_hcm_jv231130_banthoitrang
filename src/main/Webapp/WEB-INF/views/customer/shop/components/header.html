@@ -20,13 +20,25 @@
             </div>
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" >My Account</button>
+                    <div th:if="${session.loginUser != null}" class="btn-group">
+                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown" th:text="${session.loginUser.customerName}">My Account</button>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="/auth">
+                            <a href="/profile">
+                                <button class="dropdown-item" type="button">Profile</button>
+                            </a>
+                            <a href="/logout">
+                                <button class="dropdown-item" type="button">Logout</button>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div th:unless="${session.loginUser != null}" class="btn-group">
+                        <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">My Account</button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="/login">
                                 <button class="dropdown-item" type="button">Sign in</button>
                             </a>
-                            <a href="/auth">
+                            <a href="/register">
                                 <button class="dropdown-item" type="button">Sign up</button>
                             </a>
                         </div>
@@ -130,7 +142,7 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="" class="nav-item nav-link active">Home</a>
-                            <a href="/shop" class="nav-item nav-link">Product</a>
+                            <a href="/product" class="nav-item nav-link">Product</a>
                             <a href="/detail" class="nav-item nav-link">Detail</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>

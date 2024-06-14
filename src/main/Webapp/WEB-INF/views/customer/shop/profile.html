@@ -59,18 +59,20 @@
     <h1>My Profile</h1>
     <div class="profile-info">
         <div class="profile-picture">
-            <img th:src="@{${customer.avatar}}" alt="Profile Picture">
+            <img th:src="@{${customer.avatar ?: ''}}" alt="Profile Picture">
         </div>
         <div class="user-details">
-            <p><strong>Name:</strong> <span th:text="${customer.customerName}"></span></p>
-            <p><strong>Address:</strong> <span th:text="${customer.address}"></span></p>
-            <p><strong>Email:</strong> <span th:text="${customer.email}"></span></p>
-            <p><strong>Phone:</strong> <span th:text="${customer.phoneNumber}"></span></p>
-            <p><strong>gender:</strong> <span th:text="${customer.gender ? 'Nam' : 'Nu'}"></span></p>
+            <p><strong>Name:</strong> <span th:text="${customer.customerName ?: ''}"></span></p>
+            <p><strong>Address:</strong> <span th:text="${customer.address ?: ''}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${customer.email ?: ''}"></span></p>
+            <p><strong>Phone:</strong> <span th:text="${customer.phoneNumber ?: ''}"></span></p>
+            <p><strong>gender:</strong> <span th:text="${customer.gender != null ? (customer.gender ? 'Nam' : 'Nu') : ''}"></span></p>
         </div>
     </div>
-    <a th:href="|/profile/order|" class="btn">View Order</a>
-    <a th:href="|/profile/edit|" class="btn">Edit Profile</a>
+    <div th:if="${customer.avatar != null && !customer.avatar.isEmpty() && customer.customerName != null && !customer.customerName.isEmpty() && customer.address != null && !customer.address.isEmpty() && customer.email != null && !customer.email.isEmpty() && customer.phoneNumber != null && !customer.phoneNumber.isEmpty() && customer.gender != null}">
+        <a th:href="|/profile/order|" class="btn">View Order</a>
+        <a th:href="|/profile/edit|" class="btn">Edit Profile</a>
+    </div>
 </div>
 </body>
 </html>

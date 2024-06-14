@@ -20,10 +20,9 @@ public class UserServicelmpl implements IUserService {
     }
 
     @Override
-    public void save(RegisterForm registerForm) {
-        userDao.save(converFormRegisterToUser(registerForm));
+    public void save(Customer customer) {
+        userDao.save(customer);
     }
-
     @Override
     public Customer converFormRegisterToUser(RegisterForm form) {
         return new Customer(null, form.getUsername(), form.getEmail(), form.getPassword(), null, null, null, false, true, new Date(),null, null);

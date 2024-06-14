@@ -46,7 +46,13 @@ public class CustomerController {
     public String login(HttpSession session,Model model) {
         Customer customer = (Customer) session.getAttribute("loginUser");
         model.addAttribute("customer", customer);
+
         return "customer/shop/profile/order";
+    }
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("loginUser");
+        return "redirect:/";
     }
     @GetMapping("/cart")
     public String cart() {
@@ -60,7 +66,7 @@ public class CustomerController {
     public String contact() {
         return "customer/shop/contact";
     }
-    @GetMapping("/shop")
+    @GetMapping("/product")
     public String shop() {
         return "customer/shop/shop";
     }
