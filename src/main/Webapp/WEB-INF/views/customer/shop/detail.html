@@ -142,8 +142,9 @@
                                 </button>
                             </div>
                         </div>
-                        <a class="btn btn-primary px-3" th:href="@{/productadd/{id}(id=${pro.id})}"><i class="fa fa-shopping-cart mr-1" ></i> Add To
-                            Cart</a>
+                        <a class="btn btn-primary px-3" onclick="addToCartSuccess()" th:href="@{/productadd/{id}(id=${pro.id})}"><i class="fa fa-shopping-cart mr-1" ></i> Add To
+                            Cart
+                        </a>
                     </div>
                     <div class="d-flex pt-2">
                         <strong class="text-dark mr-2">Share on:</strong>
@@ -371,5 +372,11 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
+
+<script>
+    function addToCartSuccess() {
+        alert("Thêm thành công");
+    }
+</script>
 
 </html>

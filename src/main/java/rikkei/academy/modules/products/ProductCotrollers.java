@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import rikkei.academy.modules.orderDetail.OrderDetail;
 import rikkei.academy.modules.products.dto.response.ProductResponse;
 import rikkei.academy.modules.products.service.IProductService;
 
@@ -41,4 +43,14 @@ public class ProductCotrollers {
         model.addAttribute("products", products);
         return "/customer/shop/cart";
     }
+//    @PostMapping("/add-to-cart/{productId}")
+//    public String addToCart(@PathVariable Integer productId) {
+//        Product product = productService.findById(productId);
+//        OrderDetail orderDetail = new OrderDetail();
+//        orderDetail.setProductId(product);
+//        orderDetail.setStatus(true);
+//        // Set price and quantity as needed
+//        orderDetailService.save(orderDetail);
+//        return "redirect:/cart";
+//    }
 }
