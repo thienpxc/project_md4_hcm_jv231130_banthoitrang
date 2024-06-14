@@ -625,11 +625,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="pro:${products}">
+                <tr th:if="${products != null && !products.isEmpty()}" th:each="pro:${products}">
                   <td th:text="${pro.id}"></td>
                   <td th:text="${pro.name}"></td>
                   <td style="display: flex; justify-content: center; align-items: center;">
                     <img th:if ="${!pro.images.isEmpty()}" th:src="${pro.images.get(0).url}" style="width: 100px; height: 100px; object-fit: cover ">
+                    <img
+                    th:if ="${pro.images.isEmpty()}" th:src="@{/images/no-image.png}" style="width: 100px; height: 100px; object-fit: cover "
+                    >
                   </td>
                     <td th:text="${pro.price}"></td>
                     <td th:text="${pro.createdAt}"></td>

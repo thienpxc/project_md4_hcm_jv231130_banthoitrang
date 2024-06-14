@@ -41,7 +41,6 @@ public class ProductController {
         long du = totalElements%limit;
         long totalPages = du==0?nguyen:nguyen+1;
         model.addAttribute("products",productService.findByPagination(page,limit));
-        System.out.println("product0" + productService.findByPagination(page,limit).get(0).toString());
         model.addAttribute("totalPages",totalPages);
         model.addAttribute("page",page);
         model.addAttribute("limit",limit);
@@ -82,9 +81,8 @@ public class ProductController {
 
     @PostMapping(value = "product/edit", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> doEdit(@Valid @ModelAttribute("productEdit") ProductRequestUpdate request, BindingResult result, Model model) {
+    public ResponseEntity<Map<String, Object>> doEdit(@Valid @ModelAttribute("productEdit") ProductRequestUpdate request, BindingResult result) {
         Map<String, Object> response = new HashMap<>();
-        System.out.println("da vao update 1");
         Product product = productService.findById(request.getId());
         List<Category> categories = categoryService.findAllCategory();
 
@@ -112,5 +110,10 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Có lỗi xảy ra: " + e.getMessage());
         }
+    }
+    @GetMapping("product/delete")
+    public String deleteProduct(@RequestParam("id") Integer id){
+        productService.delete(id);
+        return "redirect:/admin/product";
     }
 }

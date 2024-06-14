@@ -27,4 +27,5 @@ public interface IProductService extends IGeneric<Product,Integer> {
     List<Product> findByCategory(Integer categoryId);
     ProductImages findImageById(Integer id);
 
+
 }
