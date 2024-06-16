@@ -28,19 +28,7 @@
 
 <body>
 <div th:replace="~{/customer/shop/components/header :: header}"></div>
-    <!-- Breadcrumb Start -->
-    <div class="container-fluid">
-        <div class="row px-xl-5">
-            <div class="col-12">
-                <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="">Home</a>
-                    <a class="breadcrumb-item text-dark" href="/showProducts">Shop</a>
-                    <span class="breadcrumb-item active">Shopping Cart</span>
-                </nav>
-            </div>
-        </div>
-    </div>
-    <!-- Breadcrumb End -->
+
 
 
     <!-- Cart Start -->
@@ -124,7 +112,7 @@
                             <h5>Total</h5>
                             <h5 class="total-price" th:text="${totalPrice + 10}"></h5> <!-- 10 is the shipping cost -->
                         </div>
-                        <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                        <a th:href="@{/checkout}" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</a>
                     </div>
                 </div>
             </div>
@@ -154,63 +142,5 @@
     <script src="js/main.js"></script>
 </body>
 
-<!--<script>-->
-<!--    $(document).ready(function() {-->
-<!--        // Khi nút tăng hoặc giảm được nhấp-->
-<!--        $('.btn-plus, .btn-minus').click(function() {-->
-<!--            var $input = $(this).closest('.quantity').find('input');-->
-<!--            var quantity = parseInt($input.val());-->
-
-<!--            // Tăng hoặc giảm số lượng-->
-<!--            if ($(this).hasClass('btn-plus')) {-->
-<!--                quantity++;-->
-<!--            } else if ($(this).hasClass('btn-minus') && quantity > 1) {-->
-<!--                quantity&#45;&#45;;-->
-<!--            }-->
-
-<!--            // Cập nhật số lượng mới trong ô nhập liệu-->
-<!--            $input.val(quantity);-->
-
-<!--            // Tính toán lại tổng tiền-->
-<!--            updateSubtotal();-->
-
-<!--            // Lấy id của orderDetail từ một thuộc tính data-* trong thẻ tr-->
-<!--            var orderDetailId = $(this).closest('tr').data('orderDetailId');-->
-
-<!--            // Gửi yêu cầu AJAX đến máy chủ-->
-<!--            $.ajax({-->
-<!--                url: '/updateOrderDetail',  // URL của API cập nhật orderDetail-->
-<!--                method: 'POST',-->
-<!--                data: {-->
-<!--                    orderDetailId: orderDetailId,-->
-<!--                    quantity: quantity-->
-<!--                },-->
-<!--                success: function(response) {-->
-<!--                    // Xử lý khi cập nhật thành công-->
-<!--                },-->
-<!--                error: function(jqXHR, textStatus, errorThrown) {-->
-<!--                    // Xử lý khi có lỗi xảy ra-->
-<!--                }-->
-<!--            });-->
-<!--        });-->
-
-<!--        // Tính toán tổng tiền ban đầu-->
-<!--        updateSubtotal();-->
-<!--    });-->
-
-<!--    function updateSubtotal() {-->
-<!--        var subtotal = 0;-->
-<!--        $('.total').each(function() {-->
-<!--            subtotal += parseFloat($(this).text());-->
-<!--        });-->
-<!--        $('.subtotal').text('$' + subtotal.toFixed(2));-->
-
-<!--        // Tính toán tổng tiền bao gồm phí vận chuyển-->
-<!--        var shipping = 10;-->
-<!--        var total = subtotal + shipping;-->
-<!--        $('.total-price').text('$' + total.toFixed(2));-->
-<!--    }-->
-
-<!--</script>-->
 
 </html>

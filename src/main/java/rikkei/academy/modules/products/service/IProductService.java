@@ -26,6 +26,9 @@ public interface IProductService extends IGeneric<Product,Integer> {
     void deleteImage(Integer id);
     List<Product> findByCategory(Integer categoryId);
     ProductImages findImageById(Integer id);
+    List<Product> findNewestProduct(Integer page, Integer size);
+    List<Product> findOldestProducts(Integer page, Integer size);
+
 
 
 }

@@ -40,8 +40,8 @@ public class OrderDetailService {
 
         return orderDetailDao.changeQuantity(orderItemId, change);
     }
-    public double calculateTotalPrice() {
-        return orderDetailDao.calculateTotalPrice();
+    public  Double calculateTotalPrice(int customer) {
+        return orderDetailDao.calculateTotalPrice(customer);
     }
 
     @ModelAttribute("cartQuantity")

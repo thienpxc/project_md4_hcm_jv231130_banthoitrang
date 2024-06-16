@@ -15,6 +15,8 @@ import rikkei.academy.modules.orderDetail.service.OrderDetailService;
 import rikkei.academy.modules.products.Product;
 import rikkei.academy.modules.products.service.IProductService;
 
+import javax.naming.AuthenticationException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -35,13 +37,13 @@ public class CartController {
         }
         model.addAttribute("orderDetail", orderDetailService.findAllActiveByOrderId(customer.getCustomerId()));
 
-        double totalPrice = orderDetailService.calculateTotalPrice();
-        model.addAttribute("totalPrice", totalPrice);
+        model.addAttribute("totalPrice", orderDetailService.calculateTotalPrice(customer.getCustomerId()));
         return "customer/shop/cart";
     }
 
+
     @PostMapping("/productadd/{id}")
-    public String addToCart(@PathVariable("id") int productId, @RequestParam("quantity") int quantity, HttpSession session, OrderDetail orderDetail,Model model) {
+    public String addToCart(@PathVariable("id") int productId, @RequestParam("quantity") Integer quantity, HttpSession session, OrderDetail orderDetail,Model model) {
         // Lấy đối tượng Customer từ phiên
         Customer customer = (Customer) session.getAttribute("loginUser");
         if (customer == null) {
@@ -55,6 +57,7 @@ public class CartController {
 
         OrderDetail existingOrderDetail = orderDetailService.findByOrderIdAndProductId(order, product);
         if (existingOrderDetail != null) {
+
             existingOrderDetail.setQuantity(existingOrderDetail.getQuantity() + quantity);
             existingOrderDetail.setPrice(existingOrderDetail.getPrice() + product.getPrice() * quantity);
             orderDetailService.save(existingOrderDetail);

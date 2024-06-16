@@ -29,7 +29,13 @@ public class ProductServicelmpl implements IProductService {
     @Autowired
     private UploadFileService uploadFileService;
 
-    private final String uploadFolderProduct = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
+
+    private final String uploadFolderProduct ="C:\\Users\\dokie.DOKIEU\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
+
+
+
+
+
     @Override
     public List<Product> findAllProduct() {
         return productDaolmpl.findAll();
@@ -147,4 +153,12 @@ public class ProductServicelmpl implements IProductService {
     public ProductImages findImageById(Integer id) {
         return productDaolmpl.findImageById(id);
     }
+
+    @Override
+    public List<Product> findNewestProduct(Integer page, Integer size){
+        return productDaolmpl.findNewestProduct(page, size);
+    };
+    public List<Product> findOldestProducts(Integer page, Integer size){
+        return productDaolmpl.findOldestProducts(page, size);
+    };
 }

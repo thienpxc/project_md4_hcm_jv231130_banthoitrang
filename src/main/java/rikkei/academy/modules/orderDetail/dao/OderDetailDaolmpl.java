@@ -48,7 +48,7 @@ public List<OrderDetail> findAllActiveByCustomerId(int customerId) {
 }
     public OrderDetail findByOrderIdAndProductId(Orders order, Product product) {
         Session session = sessionFactory.getCurrentSession();
-        Query<OrderDetail> query = session.createQuery("from OrderDetail where orderId = :order and productId = :product", OrderDetail.class);
+        Query<OrderDetail> query = session.createQuery("from OrderDetail where status = true and orderId = :order and productId = :product", OrderDetail.class);
         query.setParameter("order", order);
         query.setParameter("product", product);
         return query.uniqueResult();
@@ -82,19 +82,14 @@ public List<OrderDetail> findAllActiveByCustomerId(int customerId) {
         session.save(orderItem);
         return orderItem;
     }
-    public double calculateTotalPrice() {
+    public Double calculateTotalPrice(int customer) {
         Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("SELECT SUM(price) FROM OrderDetail");
-        Double totalPrice = (Double) query.uniqueResult();
-        return (totalPrice != null) ? totalPrice : 0.0;
+        Query query = session.createQuery("select sum(od.price) from OrderDetail od where od.status = true and od.orderId.customer.id = :customer");
+        query.setParameter("customer", customer);
+        return (Double) query.uniqueResult();
     }
 
-    public int calculateCartQuantity() {
-        Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("SELECT SUM(quantity) FROM OrderDetail");
-        Long quantity = (Long) query.uniqueResult();
-        return (quantity != null) ? quantity.intValue() : 0;
-    }
+
 
 
 

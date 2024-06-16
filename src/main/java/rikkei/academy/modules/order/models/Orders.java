@@ -22,7 +22,9 @@ public class Orders {
 
     public enum OderStatus {
         PENDING,
+
         WAITING,
+
         CONFIRMED,
         SHIPPING,
         DELIVERED,
@@ -46,6 +48,7 @@ public class Orders {
     private List<OrderDetail> orderDetails;
     private LocalDateTime orderAt;
     private LocalDateTime deliverAt;
+    private Boolean status ;
 
     public Orders(Customer customer) {
         this.customer = customer;
@@ -58,5 +61,7 @@ public class Orders {
         this.orderDetails = new ArrayList<>();
         this.orderAt = LocalDateTime.now();
         this.deliverAt = null;
+        this.status = true;
+
     }
 }
