@@ -104,7 +104,7 @@ public class ProductDaolmpl implements IProductDao{
     @Override
     public List<Product> findByCategoryId(Integer categoryId) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Product p where p.categoryId.id = :id", Product.class)
+        return session.createQuery("from Product p where status = true  and  p.categoryId.id = :id", Product.class)
                 .setParameter("id", categoryId)
                 .list();
     }

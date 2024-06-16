@@ -2,6 +2,7 @@ package rikkei.academy.modules.orderDetail.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import rikkei.academy.modules.customer.Customer;
@@ -11,9 +12,11 @@ import rikkei.academy.modules.orderDetail.OrderDetail;
 import org.hibernate.query.Query;
 import rikkei.academy.modules.products.Product;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
+@Transactional
 public class OderDetailDaolmpl {
     @Autowired
     private SessionFactory sessionFactory;
@@ -31,12 +34,7 @@ public class OderDetailDaolmpl {
         Query<OrderDetail> query = session.createQuery("from OrderDetail", OrderDetail.class);
         return query.getResultList();
     }
-//    public List<OrderDetail> findAllActiveByOrderId(int orderId) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Query<OrderDetail> query = session.createQuery("from OrderDetail where status = true and orderId.id = :orderId", OrderDetail.class);
-//        query.setParameter("orderId", orderId);
-//        return query.getResultList();
-//    }
+
 public List<OrderDetail> findAllActiveByCustomerId(int customerId) {
     Session session = sessionFactory.getCurrentSession();
     // Retrieve the Customer object
@@ -55,5 +53,49 @@ public List<OrderDetail> findAllActiveByCustomerId(int customerId) {
         query.setParameter("product", product);
         return query.uniqueResult();
     }
+    public OrderDetail deleteOrderDetail(OrderDetail orderDetail) {
+        Session session = sessionFactory.getCurrentSession();
+
+        // Retrieve the Order object
+        Orders order = orderDetail.getOrderId();
+
+        // Remove the OrderDetail from the Order
+        order.getOrderDetails().remove(orderDetail);
+
+        // Delete the OrderDetail
+        session.delete(orderDetail);
+
+        return orderDetail;
+    }
+    public OrderDetail findById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(OrderDetail.class, id);
+    }
+    public OrderDetail changeQuantity(int orderItemId, int change) {
+        Session session = sessionFactory.getCurrentSession();
+        OrderDetail orderItem = findById(orderItemId);
+        int newQuantity = Math.max(1, orderItem.getQuantity() + change); // Đảm bảo số lượng không nhỏ hơn 1
+        double newPrice = newQuantity * orderItem.getProductId().getPrice();
+
+        orderItem.setQuantity(newQuantity);
+        orderItem.setPrice(newPrice);
+        session.save(orderItem);
+        return orderItem;
+    }
+    public double calculateTotalPrice() {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT SUM(price) FROM OrderDetail");
+        Double totalPrice = (Double) query.uniqueResult();
+        return (totalPrice != null) ? totalPrice : 0.0;
+    }
+
+    public int calculateCartQuantity() {
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("SELECT SUM(quantity) FROM OrderDetail");
+        Long quantity = (Long) query.uniqueResult();
+        return (quantity != null) ? quantity.intValue() : 0;
+    }
+
+
 
 }
