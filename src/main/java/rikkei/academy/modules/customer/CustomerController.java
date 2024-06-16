@@ -65,14 +65,12 @@ public class CustomerController {
     public String showRegistrationForm(HttpSession session,Model model) {
         Customer customer = (Customer) session.getAttribute("loginUser");
         model.addAttribute("customer", customer);
-
         return "customer/shop/profile/edit";
     }
     @GetMapping("/profile/order")
     public String login(HttpSession session,Model model) {
         Customer customer = (Customer) session.getAttribute("loginUser");
         model.addAttribute("customer", customer);
-
         return "customer/shop/profile/order";
     }
     @GetMapping("/logout")

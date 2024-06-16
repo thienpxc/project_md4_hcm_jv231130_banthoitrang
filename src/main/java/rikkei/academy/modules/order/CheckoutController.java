@@ -35,7 +35,7 @@ public class CheckoutController {
     private OderDetailDaolmpl orderDetailDAO;
     private OrderDetailService orderDetailService;
     @Autowired
-    private OrderServicelmpl orderServices;
+    private IOrderService orderServices;
     @Autowired
     private IProductService productService;
 

@@ -70,7 +70,7 @@ public class ProductDaolmpl implements IProductDao{
     @Override
     public List<Product> findByPagination(Integer page, Integer size, String category) {
         Session session = sessionFactory.getCurrentSession();
-        if (category == null){
+        if (category == null || category.isEmpty()){
             return session.createQuery("from Product where status = true", Product.class)
                     .setMaxResults(size)
                     .setFirstResult(page*size)

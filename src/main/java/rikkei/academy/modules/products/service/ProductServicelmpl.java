@@ -30,7 +30,7 @@ public class ProductServicelmpl implements IProductService {
     private UploadFileService uploadFileService;
 
 
-    private final String uploadFolderProduct ="C:\\Users\\dokie.DOKIEU\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
+    private final String uploadFolderProduct ="C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
 
 
 
