@@ -30,7 +30,19 @@ public class ProductServicelmpl implements IProductService {
     private UploadFileService uploadFileService;
 
 
-    private final String uploadFolderProduct = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
+
+    private final String uploadFolderProduct;
+    {
+        String username = System.getProperty("user.name");
+        String basePath = "C:\\Users\\%s\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
+
+        if (username.equals("dokie.DOKIEU")) {
+            uploadFolderProduct = String.format(basePath, "dokie.DOKIEU");
+        } else {
+            uploadFolderProduct = String.format(basePath, "hoanc");
+        }
+    }
+
 
 
     @Override
@@ -117,8 +129,8 @@ public class ProductServicelmpl implements IProductService {
     }
 
     @Override
-    public List<ProductResponse> searchByName(String keyword) {
-        return productDaolmpl.searchByName(keyword).stream().map(ProductResponse::new).collect(Collectors.toList());
+    public List<Product> searchByName(String keyword) {
+        return productDaolmpl.searchByName(keyword);
     }
 
     @Override

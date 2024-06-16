@@ -129,7 +129,7 @@
                         </div>
                     </form>
                 </div>
-                <form th:action="@{/productadd/{id}(id=${pro.id})}" >
+                <form th:action="@{/productadd/{id}(id=${pro.id})}"  method="post">
                     <div class="d-flex align-items-center mb-4 pt-2">
                         <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn">
@@ -296,41 +296,38 @@
     </div>
 </div>
 <!-- Shop Detail End -->
-
-<div class="col-lg-4 col-md-6 col-sm-6 pb-1" th:each="pro:${products}">
-    <div class="product-item bg-light mb-4">
-        <div class="product-img position-relative overflow-hidden">
-            <img class="img-fluid w-100" th:href="@{/product/{id}(id=${pro.id})}" th:src="${pro.images.get(0).url}"
-                 alt="">
-            <div class="product-action">
-                <a class="btn btn-outline-dark btn-square" href=""><i
-                        class="fa fa-shopping-cart"></i></a>
-                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                <a class="btn btn-outline-dark btn-square" href=""><i
-                        class="fa fa-sync-alt"></i></a>
-                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+<div class="row">
+    <div class="col-lg-4 col-md-6 col-sm-12 pb-1" th:each="pro:${firstSixProducts}">
+        <div class="product-item bg-light mb-4" >
+            <div class="product-img position-relative overflow-hidden">
+                <img class="img-fluid w-100" th:href="@{/product/{id}(id=${pro.id})}" th:src="${pro.images.get(0).url}" alt="">
+                <div class="product-action">
+                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                </div>
             </div>
-        </div>
-        <div class="text-center py-4">
-            <a class="h6 text-decoration-none text-truncate" th:href="@{/product/{id}(id=${pro.id})}"
-               th:text="${pro.name}"></a>
-            <div class="d-flex align-items-center justify-content-center mt-2">
-                <h5 th:text="${pro.price}"></h5>
-                <h6 class="text-muted ml-2">
-                    <del>$123.00</del>
-                </h6>
+            <div class="text-center py-4" >
+                <a class="h6 text-decoration-none text-truncate" th:href="@{/product/{id}(id=${pro.id})}" th:text="${pro.name}"></a>
+                <div class="d-flex align-items-center justify-content-center mt-2">
+                    <h5 th:text="${pro.price}"></h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                </div>
+                <div class="d-flex align-items-center justify-content-center mb-1">
+                    <form id="productForm" th:action="@{/productadd/{id}(id=${pro.id})}" method="post">
+                        <small id="submitForm" class="fa fa-star text-primary mr-1"></small>
+                    </form>
+                    <small class="fa fa-star text-primary mr-1"></small>
+                    <small class="fa fa-star text-primary mr-1"></small>
+                    <small class="fa fa-star text-primary mr-1"></small>
+                    <small class="fa fa-star text-primary mr-1"></small>
+                    <small>(99)</small>
 
-            </div>
-            <div class="d-flex align-items-center justify-content-center mb-1">
-                <small class="fa fa-star text-primary mr-1"></small>
-                <small class="fa fa-star text-primary mr-1"></small>
-                <small class="fa fa-star text-primary mr-1"></small>
-                <small class="fa fa-star text-primary mr-1"></small>
-                <small class="fa fa-star text-primary mr-1"></small>
-                <small>(99)</small>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
 
 <!-- Products Start -->
@@ -339,8 +336,8 @@
     </h2>
     <div class="row px-xl-5">
         <div class="col">
-            <div class="owl-carousel related-carousel">
-                <div class="product-item bg-light" th:each="pro:${products}">
+            <div class="owl-carousel related-carousel" th:each="pro:${nextSixProducts}">
+                <div class="product-item bg-light" >
                     <div class="product-img position-relative overflow-hidden">
                         <img class="img-fluid w-100" th:src="${pro.images.get(0).url}" alt="">
                         <div class="product-action">
@@ -360,7 +357,9 @@
                             </h6>
                         </div>
                         <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
+                            <form id="productForms" th:action="@{/productadd/{id}(id=${pro.id})}" method="post">
+                                <small id="submitForms" class="fa fa-star text-primary mr-1"></small>
+                            </form>
                             <small class="fa fa-star text-primary mr-1"></small>
                             <small class="fa fa-star text-primary mr-1"></small>
                             <small class="fa fa-star text-primary mr-1"></small>
@@ -398,11 +397,7 @@
 <script src="js/main.js"></script>
 </body>
 
-<script>
-    function addToCartSuccess() {
-        alert("Thêm thành công");
-    }
-</script>
+
 <script>
     $(document).ready(function() {
         $('.btn-plus').on('click', function() {

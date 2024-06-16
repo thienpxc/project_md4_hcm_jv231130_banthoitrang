@@ -21,7 +21,7 @@
     <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/css/style.css" rel="stylesheet">
 </head>
@@ -151,38 +151,38 @@
 
 
     <!-- Products Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
-        <div class="row px-xl-5">
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1" >
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <img class="img-fluid w-100" alt="" >
-                        <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
-                        </div>
+<div class="container-fluid pt-5 pb-3">
+    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Featured Products</span></h2>
+    <div class="row px-xl-5">
+        <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+            <div class="product-item bg-light mb-4">
+                <div class="product-img position-relative overflow-hidden">
+                    <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
+                    <div class="product-action">
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                        <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
                     </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href=""></a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h6 class="text-muted ml-2"><del>$123.00</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
+                </div>
+                <div class="text-center py-4">
+                    <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
+                    <div class="d-flex align-items-center justify-content-center mt-2">
+                        <h5>$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center mb-1">
+                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small class="fa fa-star text-primary mr-1"></small>
+                        <small>(99)</small>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
     <!-- Products End -->
 
 
@@ -217,29 +217,36 @@
     <!-- Products Start -->
     <div class="container-fluid pt-5 pb-3">
         <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Recent Products</span></h2>
-        <div class="row px-xl-5" th:if="${!productHome.isEmpty()}" th:each="pro:${productHome}">
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+        <div class="row px-xl-5" >
+            <div class="col-lg-3 col-md-4 col-sm-6 pb-1" th:if="${!productHome.isEmpty()}" th:each="pro:${productHome}">
                 <div class="product-item bg-light mb-4">
                     <div class="product-img position-relative overflow-hidden">
                         <img class="img-fluid w-100" th:if="${pro.images != null && !pro.images.isEmpty()}" th:src="${pro.images.get(0).url}" alt="">
                         <img class="img-fluid w-100" th:if="${pro.images == null || pro.images.isEmpty()}" src="/img/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" alt="">
                         <div class="product-action">
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                            <form id="productForm" th:action="@{/productadd/{id}(id=${pro.id})}" method="post">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" class="btn btn-outline-dark btn-square add-to-cart" th:data-product-id="${pro.id}"><i class="fa fa-shopping-cart"></i></button>
+                            </form>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
                             <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                            <a class="btn btn-outline-dark btn-square" th:href="@{/product/{id}(id=${pro.id})}"><i class="fa fa-search"></i></a>
                         </div>
                     </div>
                     <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate" href="" th:text="${pro.name}">Product Name Goes Here</a>
+                        <a class="h6 text-decoration-none text-truncate" href="" th:text="${pro.name}"></a>
                         <div class="d-flex align-items-center justify-content-center mt-2">
                             <h5 th:text="${pro.price}">$123.00</h5><h6 class="text-muted ml-2"><del>$123.00</del></h6>
                         </div>
                         <div class="d-flex align-items-center justify-content-center mb-1">
+
+                                <small id="submitForm" class="fa fa-star text-primary mr-1"></small>
+
                             <small class="fa fa-star text-primary mr-1"></small>
                             <small class="fa fa-star text-primary mr-1"></small>
+                            <form id="Form" th:href="@{/product/{id}(id=${pro.id})}" >
                             <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
+                            </form>
                             <small class="fa fa-star text-primary mr-1"></small>
                             <small>(99)</small>
                         </div>
@@ -248,6 +255,9 @@
             </div>
         </div>
     </div>
+<div style="display: flex; justify-content: center; align-items: center;">
+    <button class="btn btn-danger"  th:onclick="'window.location.href=\'/showProducts\''">Xem Thêm</button>
+</div>
 
 
     <!-- Vendor Start -->
@@ -301,9 +311,26 @@
     <!-- Contact Javascript File -->
     <script src="mail/jqBootstrapValidation.min.js"></script>
     <script src="mail/contact.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
+
+<script>
+    $(document).ready(function() {
+        $('.btn-plus').on('click', function() {
+            var $input = $(this).closest('.quantity').find('input');
+            $input.val(parseInt($input.val()) + 1);
+        });
+        $('.btn-minus').on('click', function() {
+            var $input = $(this).closest('.quantity').find('input');
+            var value = parseInt($input.val());
+            if (value > 1) {
+                $input.val(value - 1);
+            }
+        });
+    });
+
+</script>
 
 </html>

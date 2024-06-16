@@ -4,11 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import rikkei.academy.modules.category.service.ICategoryService;
 import rikkei.academy.modules.order.Orders;
 import rikkei.academy.modules.orderDetail.OrderDetail;
 import rikkei.academy.modules.orderDetail.service.OrderDetailService;
+import rikkei.academy.modules.products.Product;
 import rikkei.academy.modules.products.service.IProductService;
 
 import javax.servlet.http.HttpSession;
@@ -24,13 +27,27 @@ public class CustomerController {
     @Autowired
     private OrderDetailService orderDetailService;
     @RequestMapping(value = {"/", ""})
-    public String index(HttpSession session, Model model) {
+    public String index(HttpSession session, Model model, @RequestParam(value = "page", defaultValue = "0") Integer page,
+                        @RequestParam(value = "size", defaultValue = "8") Integer limit) {
+        long totalElements = productService.getTotalsElement();
+        long nguyen = totalElements/limit;
+        long du = totalElements%limit;
+        long totalPages = du==0?nguyen:nguyen+1;
+        List<Product> products = productService.findByPagination(page, limit);
+        model.addAttribute("totalPages",totalPages);
+        model.addAttribute("page",page);
+        model.addAttribute("limit",limit);
         Customer customer = (Customer) session.getAttribute("loginUser");
         model.addAttribute("customer", customer);
-        model.addAttribute("productHome",productService.findAllProduct());
+        model.addAttribute("productHome",products);
         model.addAttribute("categoryHome",categoryService.findAllCategory());
         return "index";
     }
+
+
+
+
+
     @GetMapping("/profile")
     public String showProfile(HttpSession session, Model model) {
         Customer customer = (Customer) session.getAttribute("loginUser");
@@ -60,20 +77,7 @@ public class CustomerController {
         session.removeAttribute("loginUser");
         return "redirect:/";
     }
-    @GetMapping("/cart")
-    public String cart(HttpSession session, Model model) {
-        // Lấy đối tượng Customer từ phiên
-        Customer customer = (Customer) session.getAttribute("loginUser");
 
-        // Nếu Customer không tồn tại, chuyển hướng người dùng về trang đăng nhập hoặc trang khác tùy thuộc vào yêu cầu của bạn
-        if (customer == null) {
-            return "redirect:/login";
-        }
-        // Tìm đối tượng Orders tương ứng với Customer này
-       model.addAttribute("orderDetail", orderDetailService.findAllActiveByOrderId(customer.getCustomerId()));
-
-        return "customer/shop/cart";
-    }
     @GetMapping("/checkout")
     public String checkout() {
         return "customer/shop/checkout";
@@ -90,5 +94,8 @@ public class CustomerController {
     public String detail() {
         return "customer/shop/detail";
     }
+
+
+
 
 }
