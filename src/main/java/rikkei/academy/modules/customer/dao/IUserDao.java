@@ -13,4 +13,5 @@ public interface IUserDao {
     void save(Customer customer);
     public long getTotalsElement();
     public List<Customer> findByPagination(Integer page, Integer limit);
+    public void chanRole(Integer id);
 }

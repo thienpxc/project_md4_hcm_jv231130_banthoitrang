@@ -54,4 +54,11 @@ public class UserDaolmpl implements IUserDao{
                 .setFirstResult(page*size)
                 .list();
     }
+    @Override
+    public void chanRole(Integer id) {
+        Session session = sessionFactory.getCurrentSession();
+        Customer customer = session.get(Customer.class, id);
+        customer.setStatus(false);
+        session.update(customer);
+    }
 }

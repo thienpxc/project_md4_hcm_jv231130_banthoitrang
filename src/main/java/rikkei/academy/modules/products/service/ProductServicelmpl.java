@@ -3,7 +3,6 @@ package rikkei.academy.modules.products.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import org.springframework.web.multipart.MultipartFile;
 import rikkei.academy.modules.category.service.ICategoryService;
 import rikkei.academy.modules.products.ProductImages;
 import rikkei.academy.modules.products.dto.request.ProductRequestAdd;
@@ -30,9 +29,8 @@ public class ProductServicelmpl implements IProductService {
     @Autowired
     private UploadFileService uploadFileService;
 
-    private final String userName = System.getProperty("user.name");
 
-    private final String uploadFolderProduct = "C:\\Users\\" + userName + "\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
+    private final String uploadFolderProduct = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
 
 
     @Override

@@ -75,7 +75,6 @@ public class ProductController {
         ProductRequestUpdate productRequestUpdate = productService.updatePro(product);
         model.addAttribute("categories",categories);
         model.addAttribute("productEdit", productRequestUpdate);
-
         return "admin/product/edit";
     }
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en" xmlns:x-transition="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -625,15 +625,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${products != null && !products.isEmpty()}" th:each="pro:${products}">
+                <tr th:if="${products != null || !products.isEmpty()}" th:each="pro:${products}">
                   <td th:text="${pro.id}"></td>
                   <td th:text="${pro.name}"></td>
-                  <td style="display: flex; justify-content: center; align-items: center;">
-                    <img th:if ="${!pro.images.isEmpty()}" th:src="${pro.images.get(0).url}" style="width: 100px; height: 100px; object-fit: cover ">
-                    <img
-                    th:if ="${pro.images.isEmpty()}" th:src="@{/images/no-image.png}" style="width: 100px; height: 100px; object-fit: cover "
-                    >
+                  <td th:if ="${!pro.images.isEmpty()}" style="display: flex; justify-content: center; align-items: center;">
+                    <img  th:src="${pro.images.get(0).url}" style="width: 100px; height: 100px; object-fit: cover ">
                   </td>
+                  <td th:if="${pro.images.isEmpty()}" style="display: flex; justify-content: center; align-items: center;">  <img src="/img/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg" style="width: 100px; height: 100px; object-fit: cover"> </td>
                     <td th:text="${pro.price}"></td>
                     <td th:text="${pro.createdAt}"></td>
                   <td><a th:href="|/admin/product/edit?id=${pro.id}|" class="btn btn-warning"  data-bs-toggle="modal" data-bs-target="#editModal">Edit</a></td>

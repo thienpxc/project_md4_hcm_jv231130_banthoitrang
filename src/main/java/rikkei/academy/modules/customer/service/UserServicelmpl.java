@@ -37,4 +37,8 @@ public class UserServicelmpl implements IUserService {
     public List<Customer> findByPagination(Integer page, Integer limit) {
         return userDao.findByPagination(page, limit);
     }
+    @Override
+    public void chanRole(Integer id) {
+        userDao.chanRole(id);
+    }
 }
