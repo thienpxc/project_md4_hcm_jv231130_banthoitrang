@@ -21,9 +21,9 @@ public class UploadFileService {
 
     public List<ProductImages> uploadFile(List<MultipartFile> files,String uploadFolder) {
         if(files != null && files.size() != 0) {
-            // Lấy đường dẫ,n thư mục uploads
+
             String uploadPath = context.getRealPath("/uploads");
-            // tạo thư mục nếu chưa tồn tại
+
             File uploadDir = new File(uploadPath);
             if (!uploadDir.exists()) {
                 uploadDir.mkdir();
@@ -34,7 +34,7 @@ public class UploadFileService {
                 String fileName = files.get(i).getOriginalFilename();
                 try {
                     FileCopyUtils.copy(files.get(i).getBytes(), new File(uploadPath + File.separator + fileName));
-                    // Lưu đường dẫn vào db
+
                     FileCopyUtils.copy(files.get(i).getBytes(), new File(uploadFolder + fileName));
                     String foderInUpload = uploadFolder.substring(uploadFolder.indexOf("\\uploads"));
                     productImages.setUrl(foderInUpload.replace("\\","/") + fileName);

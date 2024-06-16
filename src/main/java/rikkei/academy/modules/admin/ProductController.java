@@ -1,6 +1,5 @@
 package rikkei.academy.modules.admin;
 
-import org.codehaus.groovy.transform.SourceURIASTTransformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import rikkei.academy.modules.category.Category;
+import rikkei.academy.modules.category.models.Category;
 import rikkei.academy.modules.category.service.ICategoryService;
 import rikkei.academy.modules.products.Product;
 
@@ -35,15 +34,17 @@ public class ProductController {
         return "admin/index";
     }
     @GetMapping("product")
-    public String product(@RequestParam(value = "page",defaultValue = "0") Integer page, @RequestParam(value = "limit",defaultValue = "3") Integer limit, Model model){
+    public String product(@RequestParam(value = "page",defaultValue = "0") Integer page, @RequestParam(value = "limit",defaultValue = "3") Integer limit,@RequestParam(name = "category", defaultValue = "") String category, Model model){
         long totalElements = productService.getTotalsElement();
         long nguyen = totalElements/limit;
         long du = totalElements%limit;
         long totalPages = du==0?nguyen:nguyen+1;
-        model.addAttribute("products",productService.findByPagination(page,limit));
+        model.addAttribute("products",productService.findByPagination(page,limit,category));
         model.addAttribute("totalPages",totalPages);
         model.addAttribute("page",page);
+        model.addAttribute("category",category);
         model.addAttribute("limit",limit);
+        model.addAttribute("listCategory",categoryService.findIdAndNameOfCategory());
         model.addAttribute("product",new ProductRequestAdd());
         return "admin/product/product";
     }

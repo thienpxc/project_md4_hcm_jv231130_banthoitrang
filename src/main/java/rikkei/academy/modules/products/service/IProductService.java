@@ -15,7 +15,7 @@ public interface IProductService extends IGeneric<Product,Integer> {
     ProductRequestUpdate updatePro(Product p);
 
     List<Product> findAllProduct();
-    List<Product> findByPagination(Integer page ,Integer limit);
+    List<Product> findByPagination(Integer page ,Integer limit, String category);
     void save(ProductRequestAdd request);
     List<Product> searchByName(String keyword);
     long getTotalsElement();

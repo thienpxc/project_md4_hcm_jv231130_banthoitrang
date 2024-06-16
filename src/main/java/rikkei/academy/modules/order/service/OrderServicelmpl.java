@@ -1,29 +1,27 @@
 package rikkei.academy.modules.order.service;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rikkei.academy.modules.customer.Customer;
-import rikkei.academy.modules.order.Orders;
+import rikkei.academy.modules.order.models.OrderStatusCount;
+import rikkei.academy.modules.order.models.Orders;
 import rikkei.academy.modules.order.dao.OrderDaolmpl;
 import rikkei.academy.modules.orderDetail.OrderDetail;
 import rikkei.academy.modules.orderDetail.dao.OderDetailDaolmpl;
-import org.hibernate.query.Query;
+
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class OrderServicelmpl {
+@Transactional
+public class OrderServicelmpl implements IOrderService {
     @Autowired
     private OrderDaolmpl ordersDao;
-    @Autowired
-    private SessionFactory sessionFactory;
 
     @Autowired
     private OderDetailDaolmpl orderDetailDao;
 
-    @Transactional
     public void saveOrderAndDetails(Orders order, List<OrderDetail> orderDetails) {
         Orders savedOrder = ordersDao.saveOrder(order);
         for (OrderDetail orderDetail : orderDetails) {
@@ -31,8 +29,53 @@ public class OrderServicelmpl {
             orderDetailDao.saveOrderDetail(orderDetail);
         }
     }
+
     public Orders findOrderByCustomer(Customer customer) {
         return ordersDao.findOrderByCustomer(customer);
+    }
+
+    @Override
+    public List<Orders> findByPagination(Integer page, Integer limit, String status) {
+        return ordersDao.findByPagination(page, limit, status);
+    }
+
+    @Override
+    public long getTotalsElement() {
+        return ordersDao.getTotalsElement();
+    }
+
+    @Override
+    public List<OrderStatusCount> findQuantityOfStatus() {
+        return ordersDao.findQuantityOfStatus();
+    }
+
+    @Override
+    public void confirmOrder(Integer orderId) {
+        Orders order = ordersDao.findOrderById(orderId);
+        order.setOrderStatus(Orders.OderStatus.CONFIRMED);
+        ordersDao.updateOrder(order);
+    }
+
+    @Override
+    public void shippingOrder(Integer orderId) {
+        Orders order = ordersDao.findOrderById(orderId);
+        order.setOrderStatus(Orders.OderStatus.SHIPPING);
+        ordersDao.updateOrder(order);
+    }
+
+    @Override
+    public void deliveredOrder(Integer orderId) {
+        Orders order = ordersDao.findOrderById(orderId);
+        order.setOrderStatus(Orders.OderStatus.DELIVERED);
+        order.setDeliverAt(LocalDateTime.now());
+        ordersDao.updateOrder(order);
+    }
+
+    @Override
+    public void cancelOrder(Integer orderId) {
+        Orders order = ordersDao.findOrderById(orderId);
+        order.setOrderStatus(Orders.OderStatus.CANCELLED);
+        ordersDao.updateOrder(order);
     }
 
 }

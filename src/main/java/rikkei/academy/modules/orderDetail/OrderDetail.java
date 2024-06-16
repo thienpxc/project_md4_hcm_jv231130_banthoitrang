@@ -1,5 +1,5 @@
 package rikkei.academy.modules.orderDetail;
-import rikkei.academy.modules.order.Orders;
+import rikkei.academy.modules.order.models.Orders;
 import lombok.*;
 import rikkei.academy.modules.products.Product;
 

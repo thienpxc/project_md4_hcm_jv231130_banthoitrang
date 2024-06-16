@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import rikkei.academy.modules.category.Category;
+import rikkei.academy.modules.category.models.Category;
 import rikkei.academy.modules.products.Product;
 import rikkei.academy.modules.products.ProductImages;
 

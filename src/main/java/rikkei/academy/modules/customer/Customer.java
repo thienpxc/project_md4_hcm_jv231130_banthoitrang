@@ -1,10 +1,9 @@
 package rikkei.academy.modules.customer;
 
 import lombok.*;
-import rikkei.academy.modules.order.Orders;
+import rikkei.academy.modules.order.models.Orders;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

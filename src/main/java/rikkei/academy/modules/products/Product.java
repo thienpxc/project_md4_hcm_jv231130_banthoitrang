@@ -1,7 +1,7 @@
 package rikkei.academy.modules.products;
 
 import lombok.*;
-import rikkei.academy.modules.category.Category;
+import rikkei.academy.modules.category.models.Category;
 
 import javax.persistence.*;
 import java.util.Date;
