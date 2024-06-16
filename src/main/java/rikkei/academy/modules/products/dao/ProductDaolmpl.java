@@ -115,4 +115,20 @@ public class ProductDaolmpl implements IProductDao{
                 .setParameter("id", categoryId)
                 .list();
     }
+    @Override
+    public List<Product> findNewestProduct(Integer page, Integer size) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Product where status = true order by createdAt desc", Product.class)
+                .setMaxResults(size)
+                .setFirstResult(page*size)
+                .list();
+    }
+    @Override
+    public List<Product> findOldestProducts(Integer page, Integer size) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Product where status = true order by createdAt asc", Product.class)
+                .setMaxResults(size)
+                .setFirstResult(page*size)
+                .list();
+    }
 }

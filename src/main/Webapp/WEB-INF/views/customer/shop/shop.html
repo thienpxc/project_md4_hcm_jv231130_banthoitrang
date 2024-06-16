@@ -27,6 +27,14 @@
 </head>
 
 <body>
+<style>
+    .product-action button:not(:first-child) {
+        display: none;
+    }
+    .product-action:hover button:not(:first-child) {
+        display: inline-block;
+    }
+</style>
 <div th:replace="~{/customer/shop/components/header :: header}"></div>
 
     <!-- Shop Start -->
@@ -186,10 +194,15 @@
                             <div class="product-img position-relative overflow-hidden">
                                 <img class="img-fluid w-100" th:href="@{/product/{id}(id=${pro.id})}" th:src="${pro.images.get(0).url}" alt="">
                                 <div class="product-action">
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-shopping-cart"></i></a>
+                                    <form th:action="@{/productadd/{id}(id=${pro.id})}" method="post">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-outline-dark btn-square">
+                                            <i class="fa fa-shopping-cart"></i>
+                                        </button>
+                                    </form>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
                                     <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" th:href="@{/product/{id}(id=${pro.id})}"><i class="fa fa-search"></i></a>
                                 </div>
                             </div>
                             <div class="text-center py-4" >
@@ -265,6 +278,24 @@
 </script>
 </body>
 
+<script>
+    function addToCart(productId, quantity) {
+        fetch('/productadd/' + productId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'quantity=' + quantity
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Xử lý phản hồi
+                console.log(data);
+                // Cập nhật UI
+            })
+            .catch(error => console.error('Error:', error));
+    }
+</script>
 
 
 </html>

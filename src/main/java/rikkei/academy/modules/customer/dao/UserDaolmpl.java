@@ -61,4 +61,5 @@ public class UserDaolmpl implements IUserDao{
         customer.setStatus(false);
         session.update(customer);
     }
+
 }

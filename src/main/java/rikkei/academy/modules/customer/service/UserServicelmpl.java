@@ -17,6 +17,8 @@ import java.util.List;
 public class UserServicelmpl implements IUserService {
     @Autowired
     private IUserDao userDao;
+    @Autowired
+    private UserDaolmpl userDaolmpl;
     @Override
     public Customer getUserByUserName(String userName) {
         return userDao.getUserByUserName(userName);
@@ -41,4 +43,5 @@ public class UserServicelmpl implements IUserService {
     public void chanRole(Integer id) {
         userDao.chanRole(id);
     }
+
 }

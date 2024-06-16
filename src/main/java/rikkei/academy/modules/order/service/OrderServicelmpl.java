@@ -22,6 +22,7 @@ public class OrderServicelmpl implements IOrderService {
     @Autowired
     private OderDetailDaolmpl orderDetailDao;
 
+
     public void saveOrderAndDetails(Orders order, List<OrderDetail> orderDetails) {
         Orders savedOrder = ordersDao.saveOrder(order);
         for (OrderDetail orderDetail : orderDetails) {
@@ -30,9 +31,15 @@ public class OrderServicelmpl implements IOrderService {
         }
     }
 
+    public Orders saveOrder(Orders order) {
+        return ordersDao.saveOrder(order);
+
+    }
+
     public Orders findOrderByCustomer(Customer customer) {
         return ordersDao.findOrderByCustomer(customer);
     }
+
 
     @Override
     public List<Orders> findByPagination(Integer page, Integer limit, String status) {
@@ -76,6 +83,22 @@ public class OrderServicelmpl implements IOrderService {
         Orders order = ordersDao.findOrderById(orderId);
         order.setOrderStatus(Orders.OderStatus.CANCELLED);
         ordersDao.updateOrder(order);
+    }
+    public void updateCustomerAndOrders(Customer customer, List<Orders> orders){
+        ordersDao.updateCustomerAndOrders(customer, orders);
+    }
+
+    public Orders findPendingOrderByCustomer(Customer customer) {
+        return ordersDao.findPendingOrderByCustomer(customer);
+    }
+
+    public boolean hasPendingOrderForCustomer(Customer customer) {
+        return ordersDao.hasPendingOrderForCustomer(customer);
+    }
+
+    public void updateCustomer(Customer customer){
+        ordersDao.updateCustomer(customer);
+
     }
 
 }

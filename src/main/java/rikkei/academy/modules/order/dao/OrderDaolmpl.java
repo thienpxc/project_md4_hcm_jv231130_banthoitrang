@@ -7,16 +7,27 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import rikkei.academy.modules.customer.Customer;
+
 import rikkei.academy.modules.order.models.OrderStatusCount;
 import rikkei.academy.modules.order.models.Orders;
 
 import java.util.ArrayList;
+
+import rikkei.academy.modules.orderDetail.dao.OderDetailDaolmpl;
+
+import javax.transaction.Transactional;
+
 import java.util.List;
 
 @Repository
 public class OrderDaolmpl implements IOrderDao {
     @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    private OderDetailDaolmpl orderRepository;
+
+
     public Orders saveOrder(Orders order) {
         Session session = sessionFactory.getCurrentSession();
         session.save(order);
@@ -24,10 +35,11 @@ public class OrderDaolmpl implements IOrderDao {
     }
     public Orders findOrderByCustomer(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
-        Query<Orders> query = session.createQuery("from Orders where customer = :customer", Orders.class);
+        Query<Orders> query = session.createQuery("from Orders where status = true and customer = :customer", Orders.class);
         query.setParameter("customer", customer);
         return query.uniqueResult();
     }
+
 
     @Override
     public List<Orders> findByPagination(Integer page, Integer limit, String status) {
@@ -85,5 +97,43 @@ public class OrderDaolmpl implements IOrderDao {
         Session session = sessionFactory.getCurrentSession();
         session.update(order);
     }
+
+    public void updateCustomerAndOrders(Customer customer, List<Orders> orders) {
+        // Lấy session hiện tại từ sessionFactory
+        Session session = sessionFactory.getCurrentSession();
+
+        // Cập nhật thông tin của Customer
+        session.update(customer);
+
+        // Cập nhật thông tin của mỗi Order trong danh sách orders
+        for (Orders order : orders) {
+            session.update(order);
+        }
+
+    }
+
+    public Orders findPendingOrderByCustomer(Customer customer) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Orders> query = session.createQuery("from Orders where customer = :customer and orderStatus = 'PENDING'", Orders.class);
+        query.setParameter("customer", customer);
+        return query.uniqueResult();
+    }
+
+    public boolean hasPendingOrderForCustomer(Customer customer) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Long> query = session.createQuery("select count(o) from Orders o where o.customer = :customer and o.orderStatus = 'PENDING'", Long.class);
+        query.setParameter("customer", customer);
+        long count = query.uniqueResult();
+        return count > 0;
+    }
+    public void updateCustomer(Customer customer) {
+        Session session = sessionFactory.getCurrentSession();
+        session.merge(customer);
+    }
+
+
+
+
+
 
 }

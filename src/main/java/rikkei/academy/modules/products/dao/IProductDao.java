@@ -20,4 +20,7 @@ public interface IProductDao extends IGenericDao<Product,Integer> {
 
     List<Product> findByCategoryId(Integer categoryId);
 
+    List<Product> findNewestProduct(Integer page, Integer size);
+    List<Product> findOldestProducts(Integer page, Integer size);
+
 }

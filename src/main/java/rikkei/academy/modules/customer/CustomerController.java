@@ -30,13 +30,19 @@ public class CustomerController {
         long nguyen = totalElements/limit;
         long du = totalElements%limit;
         long totalPages = du==0?nguyen:nguyen+1;
-        List<Product> products = productService.findByPagination(page, limit, null);
+
+        List<Product> product = productService.findByPagination(page, limit, null);
+
+        List<Product> productHome = productService.findNewestProduct(page, limit);
+
+
         model.addAttribute("totalPages",totalPages);
         model.addAttribute("page",page);
         model.addAttribute("limit",limit);
         Customer customer = (Customer) session.getAttribute("loginUser");
         model.addAttribute("customer", customer);
-        model.addAttribute("productHome",products);
+        model.addAttribute("productHome",productHome);
+        model.addAttribute("products",product);
         model.addAttribute("categoryHome",categoryService.findAllCategory());
         return "index";
     }
@@ -75,10 +81,7 @@ public class CustomerController {
         return "redirect:/";
     }
 
-    @GetMapping("/checkout")
-    public String checkout() {
-        return "customer/shop/checkout";
-    }
+
     @GetMapping("/contact")
     public String contact() {
         return "customer/shop/contact";
