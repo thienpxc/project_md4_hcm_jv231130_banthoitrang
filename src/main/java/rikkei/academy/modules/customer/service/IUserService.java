@@ -11,4 +11,5 @@ public interface IUserService {
     Customer converFormRegisterToUser(RegisterForm form);
     public long getTotalsElement();
     public List<Customer> findByPagination(Integer page, Integer limit);
+    void chanRole(Integer id);
 }

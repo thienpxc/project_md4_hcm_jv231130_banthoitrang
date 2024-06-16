@@ -612,7 +612,7 @@
           <table id="example1" class="table table-bordered table-striped text-center">
             <thead>
             <tr>
-              <th>ID</th>
+              <th>Number</th>
               <th>Name</th>
               <th>Avatar</th>
                 <th>Email</th>
@@ -622,14 +622,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user:${users}">
-                <td th:text="${user.id}"></td>
-                <td th:text="${user.name}"></td>
-                <td><img th:src="${user.avatar}" style="width: 50px;height: 50px"></td>
-                <td th:text="${user.email}"></td>
-                <td th:text="${user.role}">
-                </td>
-              <td><a th:href="|/admin/user/chanrole?id=${user.id}|" onclick="alert('Chuyển đổi thành công')" class="btn btn-danger">Change</a></td>
+            <tr th:if="${users != null && !users.isEmpty()}" th:each="user, loopStat : ${users}">
+              <td th:text="${loopStat.count}"></td>
+              <td th:text="${user.customerName}"></td>
+              <td th:if="${!user.avatar.isEmpty()}"><img th:src="${user.avatar}" style="width: 50px; height: 50px;" alt="Avatar"></td>
+                <td th:if="${user.avatar.isEmpty()}"><img src="/img/NoAvatar.jpeg" style="width: 50px; height: 50px;" alt="Avatar"></td>
+              <td th:text="${user.email}"></td>
+              <td th:text="${user.role}"></td>
+              <td>
+                <a th:href="@{/admin/user/chanrole(id=${user.customerId})}" onclick="alert('Chuyển đổi thành công')" class="btn btn-danger">Change</a>
+              </td>
             </tr>
             </tbody>
           </table>

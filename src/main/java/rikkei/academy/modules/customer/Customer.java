@@ -40,4 +40,20 @@ public class Customer {
         this.orders.add(new Orders(this));
 
     }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", customerName='" + customerName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", role=" + role +
+                ", status=" + status +
+                ", createdAt=" + createdAt +
+                ", orders=" + orders + '\'';
+    }
 }
