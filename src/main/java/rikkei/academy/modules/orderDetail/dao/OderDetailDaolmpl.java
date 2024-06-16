@@ -6,7 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import rikkei.academy.modules.customer.Customer;
-import rikkei.academy.modules.order.Orders;
+import rikkei.academy.modules.order.models.Orders;
 import rikkei.academy.modules.orderDetail.OrderDetail;
 
 import org.hibernate.query.Query;
@@ -74,7 +74,7 @@ public List<OrderDetail> findAllActiveByCustomerId(int customerId) {
     public OrderDetail changeQuantity(int orderItemId, int change) {
         Session session = sessionFactory.getCurrentSession();
         OrderDetail orderItem = findById(orderItemId);
-        int newQuantity = Math.max(1, orderItem.getQuantity() + change); // Đảm bảo số lượng không nhỏ hơn 1
+        int newQuantity = Math.max(1, orderItem.getQuantity() + change);
         double newPrice = newQuantity * orderItem.getProductId().getPrice();
 
         orderItem.setQuantity(newQuantity);

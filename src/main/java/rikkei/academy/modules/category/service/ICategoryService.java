@@ -2,8 +2,9 @@ package rikkei.academy.modules.category.service;
 
 
 import rikkei.academy.generic.IGeneric;
-import rikkei.academy.modules.category.Category;
+import rikkei.academy.modules.category.models.Category;
 import rikkei.academy.modules.category.dto.request.CategoryRequest;
+import rikkei.academy.modules.category.models.CategoryList;
 
 import java.util.List;
 
@@ -15,5 +16,7 @@ public interface ICategoryService extends IGeneric<CategoryRequest,Integer> {
     List<Category> searchByName(String keyword);
     long getTotalsElement();
     boolean existByName(String name);
+
+    List<CategoryList> findIdAndNameOfCategory();
 }
 

@@ -22,7 +22,6 @@ public class UserCotroller {
     @GetMapping("user")
     public String user(@RequestParam(value = "page", defaultValue = "0") Integer page, @RequestParam(value = "limit", defaultValue = "3") Integer limit, Model model) {
         long totalElements = userService.getTotalsElement();
-        System.out.println("totalElements" + totalElements);
         if (page < 0) {
             page = 0;
         }
@@ -34,7 +33,6 @@ public class UserCotroller {
         long totalPages = du == 0 ? nguyen : nguyen + 1;
         List<Customer> customer = userService.findByPagination(page, limit);
         System.out.println("customer" + customer.size());
-        System.out.println(customer.toString());
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("page", page);
         model.addAttribute("limit", limit);

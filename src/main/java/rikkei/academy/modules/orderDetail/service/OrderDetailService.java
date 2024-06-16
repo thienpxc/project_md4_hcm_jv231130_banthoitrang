@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import rikkei.academy.modules.customer.Customer;
-import rikkei.academy.modules.order.Orders;
+import rikkei.academy.modules.order.models.Orders;
 import rikkei.academy.modules.orderDetail.OrderDetail;
 import rikkei.academy.modules.orderDetail.dao.OderDetailDaolmpl;
 import rikkei.academy.modules.products.Product;

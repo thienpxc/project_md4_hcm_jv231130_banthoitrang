@@ -28,8 +28,8 @@ public class ProductCotrollers {
         model.addAttribute("totalPages",totalPages);
         model.addAttribute("page",page);
         model.addAttribute("limit",limit);
-        List<Product> products = productService.findByPagination(page, limit);
-        System.out.println("Products: " + products); // Thêm dòng log này
+        List<Product> products = productService.findByPagination(page, limit, null);
+        System.out.println("Products: " + products);
         model.addAttribute("products", products);
         return "/customer/shop/shop";
     }

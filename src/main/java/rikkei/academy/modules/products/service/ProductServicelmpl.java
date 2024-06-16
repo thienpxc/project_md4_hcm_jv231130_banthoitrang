@@ -29,22 +29,7 @@ public class ProductServicelmpl implements IProductService {
     @Autowired
     private UploadFileService uploadFileService;
 
-
-
-    private final String uploadFolderProduct;
-    {
-        String username = System.getProperty("user.name");
-        String basePath = "C:\\Users\\%s\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
-
-        if (username.equals("dokie.DOKIEU")) {
-            uploadFolderProduct = String.format(basePath, "dokie.DOKIEU");
-        } else {
-            uploadFolderProduct = String.format(basePath, "hoanc");
-        }
-    }
-
-
-
+    private final String uploadFolderProduct = "C:\\Users\\hoanc\\OneDrive\\Desktop\\project_md4_hcm_jv231130_banthoitrang\\src\\main\\Webapp\\uploads\\";
     @Override
     public List<Product> findAllProduct() {
         return productDaolmpl.findAll();
@@ -124,8 +109,8 @@ public class ProductServicelmpl implements IProductService {
 
 
     @Override
-    public List<Product> findByPagination(Integer page, Integer limit) {
-        return productDaolmpl.findByPagination(page, limit);
+    public List<Product> findByPagination(Integer page, Integer limit, String category) {
+        return productDaolmpl.findByPagination(page, limit, category);
     }
 
     @Override

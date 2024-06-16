@@ -4,9 +4,10 @@ package rikkei.academy.modules.category.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
-import rikkei.academy.modules.category.Category;
+import rikkei.academy.modules.category.models.Category;
 import rikkei.academy.modules.category.dao.ICategoryDao;
 import rikkei.academy.modules.category.dto.request.CategoryRequest;
+import rikkei.academy.modules.category.models.CategoryList;
 
 import javax.servlet.ServletContext;
 import javax.transaction.Transactional;
@@ -97,5 +98,10 @@ public class CategoryServicelmpl implements ICategoryService{
     @Override
     public boolean existByName(String name) {
         return categoryDao.existByName(name);
+    }
+
+    @Override
+    public List<CategoryList> findIdAndNameOfCategory() {
+        return categoryDao.findIdAndNameOfCategory();
     }
 }

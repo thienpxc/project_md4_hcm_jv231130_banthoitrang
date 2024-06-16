@@ -2,9 +2,11 @@ package rikkei.academy.modules.category.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import rikkei.academy.modules.category.Category;
+import rikkei.academy.modules.category.models.Category;
+import rikkei.academy.modules.category.models.CategoryList;
 
 import java.util.List;
 
@@ -66,5 +68,20 @@ public class CategoryDaolmpl implements ICategoryDao{
         Session session = sessionFactory.getCurrentSession();
         return !session.createQuery("from Category where name like :name")
                 .setParameter("name",name).list().isEmpty();
+    }
+
+    @Override
+    public List<CategoryList> findIdAndNameOfCategory() {
+        Session session = sessionFactory.getCurrentSession();
+        String sql = "select id, name from Category group by id, name";
+        Query query = session.createQuery(sql);
+        List<Object[]> resultList = query.list();
+        List<CategoryList> categoryLists =  new  java.util.ArrayList<>();
+        for (Object[] result : resultList){
+            Integer id = Integer.parseInt(result[0].toString());
+            String name = result[1].toString();
+            categoryLists.add(new CategoryList(id,name));
+        }
+        return categoryLists;
     }
 }

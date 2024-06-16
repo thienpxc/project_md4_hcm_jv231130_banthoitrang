@@ -1,4 +1,4 @@
-package rikkei.academy.modules.category;
+package rikkei.academy.modules.category.models;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,7 @@ public class CategoryControllers {
         if (categoryId != null) {
             products = productService.findByCategory(categoryId);
         } else {
-            products = productService.findByPagination(page, limit);
+            products = productService.findByPagination(page, limit, null);
         }
         model.addAttribute("totalPages",totalPages);
         model.addAttribute("page",page);

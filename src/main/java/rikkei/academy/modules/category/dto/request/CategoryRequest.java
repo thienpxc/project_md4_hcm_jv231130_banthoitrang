@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
-import rikkei.academy.modules.category.Category;
+import rikkei.academy.modules.category.models.Category;
 
 import javax.validation.constraints.NotBlank;
 

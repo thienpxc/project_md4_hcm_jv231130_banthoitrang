@@ -1,4 +1,4 @@
-package rikkei.academy.modules.order;
+package rikkei.academy.modules.order.models;
 
 import lombok.*;
 import rikkei.academy.generic.Status;
@@ -22,10 +22,11 @@ public class Orders {
 
     public enum OderStatus {
         PENDING,
+        WAITING,
         CONFIRMED,
         SHIPPING,
         DELIVERED,
-        CANCEL
+        CANCELLED
     }
 
     @Id
@@ -40,7 +41,7 @@ public class Orders {
     @ManyToOne
     @JoinColumn(name = "customerId")
     private Customer customer;
-    private Status shippingMethod = Status.WAITING;
+    private String shippingMethod;
     @OneToMany(mappedBy = "orderId",fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetails;
     private LocalDateTime orderAt;
@@ -48,14 +49,14 @@ public class Orders {
 
     public Orders(Customer customer) {
         this.customer = customer;
-        this.orderDate = new Date(); // Khởi tạo ngày đặt hàng là ngày hiện tại
-        this.totalAmount = "0"; // Khởi tạo tổng số tiền là 0
-        this.shippingAddress = ""; // Khởi tạo địa chỉ giao hàng là rỗng
-        this.paymentMethod = ""; // Khởi tạo phương thức thanh toán là rỗng
-        this.orderStatus = OderStatus.PENDING; // Khởi tạo trạng thái đơn hàng là PENDING
-        this.shippingMethod = Status.WAITING; // Khởi tạo phương thức giao hàng là WAITING
-        this.orderDetails = new ArrayList<>(); // Khởi tạo danh sách chi tiết đơn hàng là rỗng
-        this.orderAt = LocalDateTime.now(); // Khởi tạo thời gian đặt hàng là thời gian hiện tại
-        this.deliverAt = null; // Khởi tạo thời gian giao hàng là null
+        this.orderDate = new Date();
+        this.totalAmount = "0";
+        this.shippingAddress = "";
+        this.paymentMethod = "";
+        this.orderStatus = OderStatus.PENDING;
+        this.shippingMethod = "";
+        this.orderDetails = new ArrayList<>();
+        this.orderAt = LocalDateTime.now();
+        this.deliverAt = null;
     }
 }

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class OrderStatus {
+public class OrderStatusCount {
     private String status;
-    private int count;
+    private long count;
 }

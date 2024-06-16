@@ -1,4 +1,4 @@
-package rikkei.academy.modules.category;
+package rikkei.academy.modules.category.models;
 
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
