@@ -5,19 +5,38 @@
     <meta charset="UTF-8">
 
     <title>My Profile</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
     <style>
-        /* Styles cho toàn bộ trang */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
+
 
         /* Container chứa nội dung */
-        .container {
+        main {
             max-width: 800px;
-            margin: 0 auto;
+            margin: 20px auto;
             padding: 20px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
         /* Phần hiển thị thông tin người dùng */
@@ -33,10 +52,15 @@
             border-radius: 50%;
             object-fit: cover;
             margin-right: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
-        .user-details p {
-            margin: 10px 0;
+        .user-details ul {
+            list-style: none;
+        }
+
+        .user-details li {
+            margin-bottom: 10px;
         }
 
         /* Nút Edit Profile */
@@ -47,19 +71,33 @@
             color: #fff;
             text-decoration: none;
             border-radius: 4px;
+            transition: background-color 0.3s ease;
         }
 
         .btn:hover {
             background-color: #0056b3;
         }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        nav .btn {
+            margin: 0 10px;
+        }
+
     </style>
 </head>
 <body>
+<div th:replace="~{/customer/shop/components/header :: header}"></div>
 <div class="container">
     <h1>My Profile</h1>
     <div class="profile-info">
         <div class="profile-picture">
-            <img th:src="@{${customer.avatar ?: ''}}" alt="Profile Picture">
+            <img th:if="${customer.avatar.isEmpty()}" src="/img/noAvatar.jpg" alt="">
+            <img  th:if="${!customer.avatar.isEmpty()}" th:src="@{'/img/' + ${customer.avatar}}" alt="">
         </div>
         <div class="user-details">
             <p><strong>Name:</strong> <span th:text="${customer.customerName ?: ''}"></span></p>
@@ -69,10 +107,22 @@
             <p><strong>gender:</strong> <span th:text="${customer.gender != null ? (customer.gender ? 'Nam' : 'Nu') : ''}"></span></p>
         </div>
     </div>
-    <div th:if="${customer.avatar != null && !customer.avatar.isEmpty() && customer.customerName != null && !customer.customerName.isEmpty() && customer.address != null && !customer.address.isEmpty() && customer.email != null && !customer.email.isEmpty() && customer.phoneNumber != null && !customer.phoneNumber.isEmpty() && customer.gender != null}">
+    <div th:if="${customer.avatar == null || customer.avatar.isEmpty() || customer.customerName == null || customer.customerName.isEmpty() || customer.address == null || customer.address.isEmpty() || customer.email == null || customer.email.isEmpty() || customer.phoneNumber == null || customer.phoneNumber.isEmpty() || customer.gender == null}">
         <a th:href="|/profile/order|" class="btn">View Order</a>
         <a th:href="|/profile/edit|" class="btn">Edit Profile</a>
     </div>
 </div>
+<div th:replace="~{customer/shop/components/footer :: footer}"></div>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
 </body>
 </html>

@@ -34,7 +34,7 @@ public class ProductController {
         return "admin/index";
     }
     @GetMapping("product")
-    public String product(@RequestParam(value = "page",defaultValue = "0") Integer page, @RequestParam(value = "limit",defaultValue = "3") Integer limit,@RequestParam(name = "category", defaultValue = "") String category, Model model){
+    public String product(@RequestParam(value = "page",defaultValue = "0") Integer page, @RequestParam(value = "limit",defaultValue = "3") Integer limit,@RequestParam(name = "categoryId", defaultValue = "") String category, Model model){
         long totalElements = productService.getTotalsElement();
         long nguyen = totalElements/limit;
         long du = totalElements%limit;

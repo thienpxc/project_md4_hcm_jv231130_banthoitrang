@@ -4,77 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit Profile</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="../lib/animate/animate.min.css" rel="stylesheet">
+    <link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/css/style.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .profile-picture {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
         .profile-picture img {
             width: 150px;
             height: 150px;
             border-radius: 50%;
             object-fit: cover;
+            margin-bottom: 10px;
         }
-
         .form-group {
             margin-bottom: 20px;
         }
-
-        .form-group label {
+        label {
             display: block;
             font-weight: bold;
             margin-bottom: 5px;
         }
-
-        .form-group input[type="text"],
-        .form-group textarea {
+        input[type="text"],
+        input[type="password"],
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
+            border-radius: 3px;
+            box-sizing: border-box;
         }
-
         .btn {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #1877f2;
+            background-color: #007bff;
             color: #fff;
             text-decoration: none;
-            border-radius: 4px;
+            border-radius: 3px;
             border: none;
             cursor: pointer;
         }
-
         .btn:hover {
-            background-color: #0d6be9;
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
+<div th:replace="~{customer/shop/components/header :: header}"></div>
 <div class="container">
-    <div class="profile-picture">
-        <img th:src="@{${customer.avatar}}" alt="Profile Picture">
-        <input type="file" id="avatar" name="avatar">
-    </div>
-    <form>
+
+    <form action="/customer/shop/profile/edit" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <label for="userName">userName</label>
             <input type="text" id="userName" name="userName" th:value="${customer.customerName}">
@@ -86,6 +80,13 @@
         <div class="form-group">
             <label for="address">Address</label>
             <input type="text" id="address" name="address" th:value="${customer.address}">
+        </div>
+
+        <div class="form-group">
+            <label for="avatar">Avatar</label>
+            <img th:if="${customer.avatar.isEmpty()}" src="/img/noAvatar.jpg" alt="">
+            <img th:if="${!customer.avatar.isEmpty()}" th:src="@{'/img/' + ${customer.avatar}}" alt="">
+            <input type="file" id="avatar" name="avatar">
         </div>
         <div class="form-group">
             <label for="email">Email</label>
@@ -105,5 +106,26 @@
         <button type="submit" class="btn">Update</button>
     </form>
 </div>
+<div th:replace="~{customer/shop/components/footer :: footer}"></div>
+<!-- Footer End -->
+
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="../lib/easing/easing.min.js"></script>
+<script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="../mail/jqBootstrapValidation.min.js"></script>
+<script src="../mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+
 </body>
 </html>
